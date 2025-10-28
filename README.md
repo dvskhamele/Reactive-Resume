@@ -1,15 +1,15 @@
 <div align="center" markdown="1">
-  <a href="https://go.warp.dev/Reactive-Resume">
+  <a href="https://go.warp.dev/Signimus-Resume-Creator">
     <img alt="Warp Sponsorship" width="400" src="https://github.com/warpdotdev/brand-assets/blob/main/Github/Sponsor/Warp-Github-LG-03.png?raw=true" />
   </a>
 
-### [Warp, built for coding with multiple AI agents.](https://go.warp.dev/Reactive-Resume)
+### [Warp, built for coding with multiple AI agents.](https://go.warp.dev/Signimus-Resume-Creator)
 
-[Available for MacOS, Linux, & Windows](https://go.warp.dev/Reactive-Resume)<br>
+[Available for MacOS, Linux, & Windows](https://go.warp.dev/Signimus-Resume-Creator)<br>
 
 ---
 
-<img alt="Reactive Resume" width="800" src="https://i.imgur.com/FFc4nyZ.jpg" />
+<img alt="Signimus Resume Creator" width="800" src="https://i.imgur.com/FFc4nyZ.jpg" />
 
 ![App Version](https://img.shields.io/github/package-json/version/signimus-tech/Signimus-Resume-Creator?label=version)
 [![Docker Pulls](https://img.shields.io/docker/pulls/signimustech/signimus-resume-creator)](https://hub.docker.com/r/signimustech/signimus-resume-creator)
@@ -17,7 +17,7 @@
 [![Crowdin](https://badges.crowdin.net/reactive-resume/localized.svg)](https://crowdin.com/project/reactive-resume)
 [![Discord](https://img.shields.io/discord/1173518977851473940?label=discord&link=https%3A%2F%2Fdiscord.gg%2FhzwkZbyvUW)](https://discord.gg/hzwkZbyvUW)
 
-# Reactive Resume
+# Signimus Resume Creator
 
 A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.
 
@@ -27,13 +27,13 @@ A free and open-source resume builder that simplifies the process of creating, u
 
 ## Description
 
-Reactive Resume is a free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume. With zero user tracking or advertising, your privacy is a top priority. The platform is extremely user-friendly and can be self-hosted in less than 30 seconds if you wish to own your data completely.
+Signimus Resume Creator is a free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume. With zero user tracking or advertising, your privacy is a top priority. The platform is extremely user-friendly and can be self-hosted in less than 30 seconds if you wish to own your data completely.
 
 It's available in multiple languages and comes packed with features such as real-time editing, dozens of templates, drag-and-drop customisation, and integration with OpenAI for enhancing your writing.
 
 You can share a personalised link of your resume to potential employers, track its views or downloads, and customise your page layout by dragging-and-dropping sections. The platform also supports various font options and provides dozens of templates to choose from. And yes, there's even a dark mode for a more comfortable viewing experience.
 
-Start creating your standout resume with Reactive Resume today!
+Start creating your standout resume with Signimus Resume Creator today!
 
 ## Templates
 
@@ -78,7 +78,7 @@ Start creating your standout resume with Reactive Resume today!
 - You can track the number of views or downloads your public resume has received
 - Built with state-of-the-art (at the moment) and dependable technologies that's battle tested and peer reviewed by the open-source community on GitHub
 - **MIT License**, so do what you like with the code as long as you credit the original author
-- And yes, there’s a dark mode too 🌓
+- And yes, there's a dark mode too 🌓
 
 ## Built With
 
@@ -104,7 +104,7 @@ Start creating your standout resume with Reactive Resume today!
 
 ## License
 
-Reactive Resume is packaged and distributed using the [MIT License](/LICENSE.md) which allows for commercial use, distribution, modification and private use provided that all copies of the software contain the same license and copyright.
+Signimus Resume Creator is packaged and distributed using the [MIT License](/LICENSE.md) which allows for commercial use, distribution, modification and private use provided that all copies of the software contain the same license and copyright.
 
 _By the community, for the community._  
 A product by [Signimus Technologies Private Limited](https://www.signimus.com/)
