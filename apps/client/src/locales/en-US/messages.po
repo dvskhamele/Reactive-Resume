@@ -1191,7 +1191,7 @@ msgstr "Raise an issue"
 #: apps/client/src/pages/public/page.tsx:74
 #: apps/client/src/pages/public/page.tsx:95
 msgid "Reactive Resume"
-msgstr "Reactive Resume"
+msgstr "Signimus Resume Creator"
 
 #: apps/client/src/pages/home/sections/logo-cloud/index.tsx:39
 msgid "Reactive Resume has helped people land jobs at these great companies:"

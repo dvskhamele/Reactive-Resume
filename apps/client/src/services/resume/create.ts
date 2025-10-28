@@ -6,12 +6,23 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const createResume = async (data: CreateResumeDto) => {
-  const response = await axios.post<ResumeDto, AxiosResponse<ResumeDto>, CreateResumeDto>(
-    "/resume",
-    data,
-  );
-
-  return response.data;
+  // Check if using local storage
+  const USE_LOCAL_STORAGE = import.meta.env.VITE_USE_LOCAL_STORAGE === "true";
+  
+  if (USE_LOCAL_STORAGE) {
+    // Create locally and return the created resume
+    const response = await axios.post<ResumeDto, AxiosResponse<ResumeDto>, CreateResumeDto>(
+      "/resume",
+      data,
+    );
+    return response.data;
+  } else {
+    const response = await axios.post<ResumeDto, AxiosResponse<ResumeDto>, CreateResumeDto>(
+      "/resume",
+      data,
+    );
+    return response.data;
+  }
 };
 
 export const useCreateResume = () => {

@@ -1,18 +1,18 @@
 {
-  "name": "@reactive-resume/source",
-  "description": "A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.",
+  "name": "@signimus/resume-creator",
+  "description": "Signimus Resume Creator - A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.",
   "version": "4.5.2",
   "license": "MIT",
   "private": true,
   "packageManager": "pnpm@10.18.1",
   "author": {
-    "name": "Amruth Pillai",
-    "url": "https://amruthpillai.com",
-    "email": "hello@amruthpillai.com"
+    "name": "Signimus Technologies Private Limited",
+    "url": "https://signimus.com",
+    "email": "support@signimus.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AmruthPillai/Reactive-Resume.git"
+    "url": "https://github.com/signimus-tech/Signimus-Resume-Creator.git"
   },
   "scripts": {
     "dev": "nx run-many -t serve",
@@ -257,5 +257,9 @@
   },
   "prisma": {
     "schema": "tools/prisma/schema.prisma"
+  },
+  "homepage": "https://readylaunch.signimus.com",
+  "bugs": {
+    "url": "https://github.com/signimus-tech/Signimus-Resume-Creator/issues"
   }
 }

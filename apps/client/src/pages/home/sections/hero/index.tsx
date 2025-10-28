@@ -26,7 +26,7 @@ export const HeroSection = () => (
           <Badge>{t`Version 4`}</Badge>
 
           <a
-            href="https://docs.rxresu.me/overview/features"
+            href="https://readylaunch.signimus.com/docs/overview/features"
             className={cn(buttonVariants({ variant: "link" }), "space-x-2 text-left")}
           >
             <p>{t`What's new in the latest version`}</p>

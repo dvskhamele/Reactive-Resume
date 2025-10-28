@@ -49,7 +49,7 @@ services:
       PROXY_SSL: "true"
 
   app:
-    image: amruthpillai/reactive-resume:latest
+    image: signimustech/signimus-resume-creator:latest
     restart: unless-stopped
     depends_on:
       - postgres
@@ -61,7 +61,7 @@ services:
       NODE_ENV: production
 
       # -- URLs --
-      PUBLIC_URL: https://example.com
+      PUBLIC_URL: https://readylaunch.signimus.com
       STORAGE_URL: https://storage.example.com
 
       # -- Printer (Chrome) --

@@ -17,6 +17,9 @@ export default defineConfig({
     appVersion: JSON.stringify(process.env.npm_package_version),
   },
 
+  // Add environment variables
+  envPrefix: ["VITE_"],
+
   server: {
     host: true,
     port: 5173,

@@ -11,8 +11,8 @@
 
 <img alt="Reactive Resume" width="800" src="https://i.imgur.com/FFc4nyZ.jpg" />
 
-![App Version](https://img.shields.io/github/package-json/version/AmruthPillai/Reactive-Resume?label=version)
-[![Docker Pulls](https://img.shields.io/docker/pulls/amruthpillai/reactive-resume)](https://hub.docker.com/repository/docker/amruthpillai/reactive-resume)
+![App Version](https://img.shields.io/github/package-json/version/signimus-tech/Signimus-Resume-Creator?label=version)
+[![Docker Pulls](https://img.shields.io/docker/pulls/signimustech/signimus-resume-creator)](https://hub.docker.com/r/signimustech/signimus-resume-creator)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/AmruthPillai)](https://github.com/sponsors/AmruthPillai)
 [![Crowdin](https://badges.crowdin.net/reactive-resume/localized.svg)](https://crowdin.com/project/reactive-resume)
 [![Discord](https://img.shields.io/discord/1173518977851473940?label=discord&link=https%3A%2F%2Fdiscord.gg%2FhzwkZbyvUW)](https://discord.gg/hzwkZbyvUW)
@@ -21,7 +21,7 @@
 
 A free and open-source resume builder that simplifies the process of creating, updating, and sharing your resume.
 
-### [Go to App](https://rxresu.me/) | [Docs](https://docs.rxresu.me/)
+### [Go to App](https://readylaunch.signimus.com/) | [Docs](https://readylaunch.signimus.com/docs/)
 
 </div>
 
@@ -58,7 +58,7 @@ Start creating your standout resume with Reactive Resume today!
 - **Free, forever** and open-source
 - No telemetry, user tracking or advertising
 - You can self-host the application in less than 30 seconds
-- **Available in multiple languages** ([help add/improve your language here](https://translate.rxresu.me/))
+- **Available in multiple languages** ([help add/improve your language here](https://readylaunch.signimus.com/translate/))
 - Use your email address (or a throw-away address, no problem) to create an account
 - You can also sign in with your GitHub or Google account, and even set up two-factor authentication for extra security
 - Create as many resumes as you like under a single account, optimising each resume for every job application based on its description for a higher ATS score
@@ -94,11 +94,11 @@ Start creating your standout resume with Reactive Resume today!
 
 ## Star History
 
-<a href="https://star-history.com/#AmruthPillai/Reactive-Resume&Date">
+<a href="https://star-history.com/#signimus-tech/Signimus-Resume-Creator&Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=AmruthPillai/Reactive-Resume&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=AmruthPillai/Reactive-Resume&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=AmruthPillai/Reactive-Resume&type=Date" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=signimus-tech/Signimus-Resume-Creator&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=signimus-tech/Signimus-Resume-Creator&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=signimus-tech/Signimus-Resume-Creator&type=Date" />
   </picture>
 </a>
 
@@ -107,7 +107,7 @@ Start creating your standout resume with Reactive Resume today!
 Reactive Resume is packaged and distributed using the [MIT License](/LICENSE.md) which allows for commercial use, distribution, modification and private use provided that all copies of the software contain the same license and copyright.
 
 _By the community, for the community._  
-A passion project by [Amruth Pillai](https://www.amruthpillai.com/)
+A product by [Signimus Technologies Private Limited](https://www.signimus.com/)
 
 <p>
   <a href="https://m.do.co/c/ceae1fff245e">

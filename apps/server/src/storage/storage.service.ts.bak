@@ -52,7 +52,7 @@ export class StorageService implements OnModuleInit {
 
     const skipBucketCheck = this.configService.getOrThrow<boolean>("STORAGE_SKIP_BUCKET_CHECK");
 
-    if (true) {
+    if (skipBucketCheck) {
       this.logger.warn("Skipping the verification of whether the storage bucket exists.");
       this.logger.warn(
         "Make sure that the following paths are publicly accessible: `/{pictures,previews,resumes}/*`",

@@ -6,11 +6,21 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const deleteResume = async (data: DeleteResumeDto) => {
-  const response = await axios.delete<ResumeDto, AxiosResponse<ResumeDto>, DeleteResumeDto>(
-    `/resume/${data.id}`,
-  );
-
-  return response.data;
+  // Check if using local storage
+  const USE_LOCAL_STORAGE = import.meta.env.VITE_USE_LOCAL_STORAGE === "true";
+  
+  if (USE_LOCAL_STORAGE) {
+    // Delete locally and return the deleted resume
+    const response = await axios.delete<ResumeDto, AxiosResponse<ResumeDto>, DeleteResumeDto>(
+      `/resume/${data.id}`,
+    );
+    return response.data;
+  } else {
+    const response = await axios.delete<ResumeDto, AxiosResponse<ResumeDto>, DeleteResumeDto>(
+      `/resume/${data.id}`,
+    );
+    return response.data;
+  }
 };
 
 export const useDeleteResume = () => {

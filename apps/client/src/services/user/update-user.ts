@@ -6,12 +6,23 @@ import { axios } from "@/client/libs/axios";
 import { queryClient } from "@/client/libs/query-client";
 
 export const updateUser = async (data: UpdateUserDto) => {
-  const response = await axios.patch<UserDto, AxiosResponse<UserDto>, UpdateUserDto>(
-    "/user/me",
-    data,
-  );
-
-  return response.data;
+  // Check if using local storage
+  const USE_LOCAL_STORAGE = import.meta.env.VITE_USE_LOCAL_STORAGE === "true";
+  
+  if (USE_LOCAL_STORAGE) {
+    // Update locally and return the updated user
+    const response = await axios.patch<UserDto, AxiosResponse<UserDto>, UpdateUserDto>(
+      "/user/me",
+      data,
+    );
+    return response.data;
+  } else {
+    const response = await axios.patch<UserDto, AxiosResponse<UserDto>, UpdateUserDto>(
+      "/user/me",
+      data,
+    );
+    return response.data;
+  }
 };
 
 export const useUpdateUser = () => {

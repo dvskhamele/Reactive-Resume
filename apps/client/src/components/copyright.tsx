@@ -18,7 +18,7 @@ export const Copyright = ({ className }: Props) => (
         <a
           target="_blank"
           rel="noopener noreferrer nofollow"
-          href="https://github.com/AmruthPillai/Reactive-Resume/blob/main/LICENSE.md"
+          href="https://github.com/signimus-tech/Signimus-Resume-Creator/blob/main/LICENSE.md"
         >
           MIT
         </a>
@@ -27,12 +27,12 @@ export const Copyright = ({ className }: Props) => (
     <span>{t`By the community, for the community.`}</span>
     <span>
       <Trans>
-        A passion project by <a href="https://www.amruthpillai.com/">Amruth Pillai</a>
+        A product by <a href="https://www.signimus.com/">Signimus Technologies Private Limited</a>
       </Trans>
     </span>
 
     <span className="mt-4">
-      {t`Reactive Resume`} {"v" + appVersion}
+      {t`Signimus Resume Creator`} {"v" + appVersion}
     </span>
   </div>
 );

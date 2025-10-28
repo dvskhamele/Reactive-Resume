@@ -6,9 +6,17 @@ import { RESUMES_KEY } from "@/client/constants/query-keys";
 import { axios } from "@/client/libs/axios";
 
 export const fetchResumes = async () => {
-  const response = await axios.get<ResumeDto[], AxiosResponse<ResumeDto[]>>("/resume");
-
-  return response.data;
+  // Check if using local storage
+  const USE_LOCAL_STORAGE = import.meta.env.VITE_USE_LOCAL_STORAGE === "true";
+  
+  if (USE_LOCAL_STORAGE) {
+    // Get resumes from local storage
+    const response = await axios.get<ResumeDto[], AxiosResponse<ResumeDto[]>>("/resume");
+    return response.data;
+  } else {
+    const response = await axios.get<ResumeDto[], AxiosResponse<ResumeDto[]>>("/resume");
+    return response.data;
+  }
 };
 
 export const useResumes = () => {

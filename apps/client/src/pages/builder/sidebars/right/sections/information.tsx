@@ -65,7 +65,7 @@ const IssuesCard = () => (
     </CardContent>
     <CardFooter className="space-x-4">
       <a
-        href="https://github.com/AmruthPillai/Reactive-Resume/issues/new/choose"
+        href="https://github.com/signimus-tech/Signimus-Resume-Creator/issues/new/choose"
         className={cn(buttonVariants({ size: "sm" }))}
         rel="noopener noreferrer nofollow"
         target="_blank"
@@ -102,7 +102,7 @@ const DocumentationCard = () => (
     <CardFooter className="space-x-4">
       <a
         className={cn(buttonVariants({ size: "sm" }))}
-        href="https://docs.rxresu.me/"
+        href="https://readylaunch.signimus.com/docs/"
         target="_blank"
         rel="noopener noreferrer nofollow"
       >
