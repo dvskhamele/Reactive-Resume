@@ -9,9 +9,9 @@ const useLocalStorage = import.meta.env.VITE_USE_LOCAL_STORAGE === "true";
 
 if (useLocalStorage) {
   // Override the axios instance with our mock implementation
-  import("./services/local-storage/mock-axios").then(({ mockAxios }) => {
+  import("./services/local-storage/mock-axios").then(({ mockAxiosInstance }) => {
     // Replace the global axios instance with our mock
-    window.axios = mockAxios;
+    window.axios = mockAxiosInstance;
     
     // Render the app after setting up the mock
     renderApp();

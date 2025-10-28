@@ -5,9 +5,17 @@ import { LANGUAGES_KEY } from "@/client/constants/query-keys";
 import { axios } from "@/client/libs/axios";
 
 export const fetchLanguages = async () => {
-  const response = await axios.get<Language[]>(`/translation/languages`);
+  try {
+    const response = await axios.get<Language[]>(`/translation/languages`);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    // Fallback to default languages if API call fails
+    console.warn('Translation languages API failed, using fallback:', error);
+    // Return default languages from utils
+    const { languages } = await import("@reactive-resume/utils");
+    return languages;
+  }
 };
 
 export const useLanguages = () => {

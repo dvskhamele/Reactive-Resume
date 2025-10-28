@@ -4,15 +4,27 @@ import { useQuery } from "@tanstack/react-query";
 import { axios } from "@/client/libs/axios";
 
 export const fetchGitHubContributors = async () => {
-  const response = await axios.get<ContributorDto[]>(`/contributors/github`);
+  try {
+    const response = await axios.get<ContributorDto[]>(`/contributors/github`);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    // Fallback to empty array if API call fails
+    console.warn('GitHub contributors API failed, using fallback:', error);
+    return [];
+  }
 };
 
 export const fetchCrowdinContributors = async () => {
-  const response = await axios.get<ContributorDto[]>(`/contributors/crowdin`);
+  try {
+    const response = await axios.get<ContributorDto[]>(`/contributors/crowdin`);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    // Fallback to empty array if API call fails
+    console.warn('Crowdin contributors API failed, using fallback:', error);
+    return [];
+  }
 };
 
 export const useContributors = () => {

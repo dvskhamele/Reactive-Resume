@@ -23,7 +23,7 @@ const initializeLocalStorage = (): LocalStorageData => {
     }
   }
 
-  // Create default user if none exists
+  // Create default user
   const defaultUser: UserDto = {
     id: createId(),
     email: "user@signimus.com",
@@ -93,7 +93,7 @@ export const localStorageService = {
   // Resume related operations
   getResumes: (): ResumeDto[] => {
     const data = getLocalStorageData();
-    return data.resumes;
+    return data.resumes || [];
   },
 
   getResumeById: (id: string): ResumeDto | undefined => {
@@ -233,7 +233,7 @@ export const localStorageService = {
             numbering: "none",
             pagination: false,
             filename: "Resume",
-            format: "a4",
+            format: "A4",
             optimize: true,
             orientation: "portrait",
             margins: 24.5,

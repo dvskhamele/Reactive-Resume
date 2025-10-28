@@ -5,9 +5,16 @@ import { AUTH_PROVIDERS_KEY } from "@/client/constants/query-keys";
 import { axios } from "@/client/libs/axios";
 
 export const getAuthProviders = async () => {
-  const response = await axios.get<AuthProvidersDto>(`/auth/providers`);
+  try {
+    const response = await axios.get<AuthProvidersDto>(`/auth/providers`);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    // Fallback to default providers if API call fails
+    console.warn('Auth providers API failed, using fallback:', error);
+    // Return just email as the default provider if API call fails
+    return ["email"];
+  }
 };
 
 export const useAuthProviders = () => {

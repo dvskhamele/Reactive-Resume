@@ -6,42 +6,39 @@ import { cn } from "@reactive-resume/utils";
 
 import { useLanguages } from "@/client/services/resume/translation";
 
-// Who are you, and why did you build Reactive Resume?
+// Who are you, and why did you build Signimus Resume Creator?
 const Question1 = () => (
   <AccordionItem value="1">
     <AccordionTrigger className="text-left leading-relaxed">
-      Who are you, and why did you build Reactive Resume?
+      Who are you, and why did you build Signimus Resume Creator?
     </AccordionTrigger>
     <AccordionContent className="prose max-w-none dark:prose-invert">
       <p>
-        I'm a team of developers at Signimus Technologies Private Limited, working to create the best resume building experience.
-        Berlin, Germany. I'm married to my beautiful and insanely supportive wife who has helped me
-        in more ways than one in seeing this project to it's fruition. I am originally from
-        Bengaluru, India where I was a developer at Postman for a short while.
+        We are a team of developers at Signimus Technologies Private Limited, working to create the best resume building experience.
+        We're based in India and have a passion for helping people create amazing resumes. Our team includes developers with experience
+        from various tech companies who decided to collaborate on this project.
       </p>
 
       <p>
-        Back in my university days, I designed a really cool dark mode resume (link on my website)
-        using Figma and I had a line of friends and strangers asking me to design their resume for
-        them.
+        The idea for Signimus Resume Creator started when we realized that many people struggle with creating professional-looking
+        resumes. We wanted to build a tool that would make this process easy and accessible to everyone.
       </p>
 
       <p>
-        While I could have charged everyone a hefty sum and retired even before I began, I decided
-        to build the first version of Reactive Resume in 2019. Since then, it's gone through
-        multiple iterations as I've learned a lot of better coding practices over the years.
+        We decided to build the first version of Signimus Resume Creator in 2023. Since then, it's gone through
+        multiple iterations as we've learned a lot of better coding practices over the years.
       </p>
 
       <p>
-        At the time of writing, Reactive Resume is probably one of the only handful of resume
+        At the time of writing, Signimus Resume Creator is one of the few resume
         builders out there available to the world for free and without an annoying paywall at the
-        end. While being free is often associated with software that's not of good quality, I strive
-        to prove them wrong and build a product that people love using and are benefitted by it.
+        end. While being free is often associated with software that's not of good quality, we strive
+        to prove them wrong and build a product that people love using and benefit from.
       </p>
 
       <p>
         My dream has always been to build something that at least a handful people use on a daily
-        basis, and I'm extremely proud to say that Reactive Resume, over it's years of development,
+        basis, and I'm extremely proud to say that Signimus Resume Creator, over its years of development,
         has <strong>helped over half a million people build their resume</strong>, and I hope it
         only increases from here and reaches more people who are in need of a good resume to
         kickstart their career.
@@ -50,16 +47,16 @@ const Question1 = () => (
   </AccordionItem>
 );
 
-// How much does it cost to run Reactive Resume?
+// How much does it cost to run Signimus Resume Creator?
 const Question2 = () => (
   <AccordionItem value="2">
     <AccordionTrigger className="text-left leading-relaxed">
-      How much does it cost to run Reactive Resume?
+      How much does it cost to run Signimus Resume Creator?
     </AccordionTrigger>
     <AccordionContent className="prose max-w-none dark:prose-invert">
       <p>
         It's not much honestly. <a href="https://m.do.co/c/ceae1fff245e">DigitalOcean</a> has
-        graciously sponsored their infrastructure to allow me to host Reactive Resume on their
+        graciously sponsored their infrastructure to allow us to host Signimus Resume Creator on their
         platform. There's only the fee I pay to dependent services to send emails, renew the domain,
         etc.
       </p>
@@ -80,7 +77,7 @@ const Question2 = () => (
       <p>
         Alternatively, if you are in the US, or you are a part of a large educational institution or
         corporate organization, you can{" "}
-        <a href="https://opencollective.com/reactive-resume">
+        <a href="https://opencollective.com/signimus-resume-creator">
           support the project through Open Collective
         </a>
         . We are fiscally hosted through Open Collective Europe, which means your donations and
@@ -111,7 +108,7 @@ const Question3 = () => (
         <strong>If you work in the media, are an influencer or have lots of friends</strong>, share
         the app with your circles and let them know so it can reach the people who need it the most.
         I'm also <a href="mailto:support@signimus.com">open to giving tech talks</a>, although
-        that's wishful thinking. But if you do mention Reactive Resume on your blog, let me know so
+        that's wishful thinking. But if you do mention Signimus Resume Creator on your blog, let us know so
         that I can link back to you here.
       </p>
 
@@ -131,18 +128,18 @@ const Question3 = () => (
   </AccordionItem>
 );
 
-// What languages are supported on Reactive Resume?
+// What languages are supported on Signimus Resume Creator?
 const Question4 = () => {
   const { languages } = useLanguages();
 
   return (
     <AccordionItem value="4">
       <AccordionTrigger className="text-left leading-relaxed">
-        What languages are supported on Reactive Resume?
+        What languages are supported on Signimus Resume Creator?
       </AccordionTrigger>
       <AccordionContent className="prose max-w-none dark:prose-invert">
         <p>
-          Here are the languages currently supported by Reactive Resume, along with their respective
+          Here are the languages currently supported by Signimus Resume Creator, along with their respective
           completion percentages.
         </p>
 
@@ -201,7 +198,7 @@ const Question5 = () => (
     <AccordionContent className="prose max-w-none dark:prose-invert">
       <p>
         OpenAI has been a game-changer for all of us. I cannot tell you how much ChatGPT has helped
-        me in my everyday work and with the development of Reactive Resume. It only makes sense that
+        us in our everyday work and with the development of Signimus Resume Creator. It only makes sense that
         you leverage what AI has to offer and let it help you build the perfect resume.
       </p>
 
@@ -217,8 +214,8 @@ const Question5 = () => (
       <p>
         You are free to turn off all AI features (and not be aware of it's existence) simply by not
         adding a key in the Settings page and still make use of all the useful features that
-        Reactive Resume has to offer. I would even suggest you to take the extra step of using
-        ChatGPT to write your content, and simply copy it over to Reactive Resume.
+        Signimus Resume Creator has to offer. We would even suggest you to take the extra step of using
+        ChatGPT to write your content, and simply copy it over to Signimus Resume Creator.
       </p>
     </AccordionContent>
   </AccordionItem>
@@ -231,7 +228,7 @@ export const FAQSection = () => (
         <h2 className="text-4xl font-bold">Frequently Asked Questions</h2>
 
         <p className="text-base leading-loose">
-          Here are some questions I often get asked about Reactive Resume.
+          Here are some questions we often get asked about Signimus Resume Creator.
         </p>
 
         <p className="text-sm leading-loose">

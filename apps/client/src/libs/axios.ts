@@ -11,7 +11,7 @@ import { USER_KEY } from "../constants/query-keys";
 import { toast } from "../hooks/use-toast";
 import { translateError } from "../services/errors/translate-error";
 import { queryClient } from "./query-client";
-import { mockAxiosInstance } from "@/client/services/local-storage/mock-axios-instance";
+import { mockAxiosInstance } from "../services/local-storage/mock-axios";
 
 // Check if we should use local storage instead of API calls
 const USE_LOCAL_STORAGE = import.meta.env.VITE_USE_LOCAL_STORAGE === "true";
