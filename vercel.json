@@ -1,19 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "cd /vercel/workpath && npm install && cd apps/client && npm install && npx vite build",
-        "outputDirectory": "apps/client/dist"
-      }
-    }
-  ],
+  "builds": [],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/apps/client/dist/index.html"
+      "dest": "/apps/client/dist/index.html",
+      "status": 200
     }
   ]
 }
