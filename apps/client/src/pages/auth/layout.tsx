@@ -19,8 +19,7 @@ export const AuthLayout = () => {
 
   if (!providers) return null;
 
-  // Condition (providers.length === 1) hides the divider if providers[] includes only "email"
-  const hideDivider = !providers.includes("email") || providers.length === 1;
+  const hideDivider = !Array.isArray(providers) || !providers.includes("email") || providers.length === 1;
 
   return (
     // eslint-disable-next-line tailwindcss/enforces-shorthand -- size-screen not implemented yet

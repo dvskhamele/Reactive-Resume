@@ -10,8 +10,9 @@ export const ContributorsSection = () => {
   const { github, crowdin, loading } = useContributors();
 
   const contributors = useMemo(() => {
-    if (github && crowdin) return [...github, ...crowdin];
-    return [];
+    const githubContributors = Array.isArray(github) ? github : [];
+    const crowdinContributors = Array.isArray(crowdin) ? crowdin : [];
+    return [...githubContributors, ...crowdinContributors];
   }, [github, crowdin]);
 
   return (
