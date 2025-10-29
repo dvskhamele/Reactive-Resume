@@ -2,11 +2,20 @@
   "version": 2,
   "builds": [
     {
+      "src": "apps/server/dist/main.js",
+      "use": "@vercel/node",
+      "config": { "includeFiles": ["apps/server/dist/**"] }
+    },
+    {
       "src": "apps/client/dist/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/apps/server/dist/main.js"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html",
