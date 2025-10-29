@@ -1,0 +1,13 @@
+[build]
+  base = "/"
+  command = "cd /Users/test/startups/Reactive-Resume && export VITE_USE_LOCAL_STORAGE=true && pnpm build:client"
+  publish = "apps/client/dist"
+  ignore = "git diff --quiet HEAD^ HEAD 2>/dev/null || echo 'Changes detected, proceeding with build'"
+
+[context.production]
+  command = "cd /Users/test/startups/Reactive-Resume && export VITE_USE_LOCAL_STORAGE=true && pnpm build:client"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
