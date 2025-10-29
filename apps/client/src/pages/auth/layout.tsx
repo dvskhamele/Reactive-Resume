@@ -19,7 +19,8 @@ export const AuthLayout = () => {
 
   if (!providers) return null;
 
-  const hideDivider = !Array.isArray(providers) || !Array.prototype.includes.call(providers, "email") || providers.length === 1;
+  const hasEmailProvider = Array.isArray(providers) ? providers.includes("email") : false;
+  const hideDivider = !Array.isArray(providers) || !hasEmailProvider || providers.length === 1;
 
   return (
     // eslint-disable-next-line tailwindcss/enforces-shorthand -- size-screen not implemented yet
