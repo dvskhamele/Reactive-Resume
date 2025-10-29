@@ -84,7 +84,7 @@ const initializeLocalStorage = (): LocalStorageData => {
               name: "Tech Corp",
               location: "San Francisco, CA",
               position: "Senior Software Engineer",
-              url: "https://techcorp.com",
+              url: { href: "https://techcorp.com", label: "Tech Corp" },
               startDate: "2022-01",
               endDate: "Present",
               summary: "Developed and maintained scalable web applications using React, Node.js, and modern JavaScript frameworks.",
@@ -124,7 +124,7 @@ const initializeLocalStorage = (): LocalStorageData => {
               location: "Berkeley, CA",
               studyType: "Bachelor's Degree",
               area: "Computer Science",
-              url: "https://berkeley.edu",
+              url: { href: "https://berkeley.edu", label: "UC Berkeley" },
               startDate: "2016-09",
               endDate: "2020-05",
               score: "3.8/4.0",
@@ -152,14 +152,14 @@ const initializeLocalStorage = (): LocalStorageData => {
               id: createId(),
               name: "AWS Certified Solutions Architect",
               issuer: "Amazon Web Services",
-              url: "https://aws.amazon.com",
+              url: { href: "https://aws.amazon.com", label: "AWS" },
               date: "2022-03"
             },
             {
               id: createId(),
               name: "Google Professional Cloud Developer",
               issuer: "Google Cloud",
-              url: "https://cloud.google.com",
+              url: { href: "https://cloud.google.com", label: "Google Cloud" },
               date: "2021-08"
             }
           ],
@@ -184,21 +184,24 @@ const initializeLocalStorage = (): LocalStorageData => {
               name: "JavaScript",
               level: 5,
               description: "Advanced knowledge of JavaScript including ES6+ features",
-              keywords: ["ES6", "Async/Await", "Closures", "Promises"]
+              keywords: ["ES6", "Async/Await", "Closures", "Promises"],
+              visible: true
             },
             {
               id: createId(),
               name: "React",
               level: 5,
               description: "Expert in React and related ecosystem",
-              keywords: ["Hooks", "Context API", "Redux", "Next.js"]
+              keywords: ["Hooks", "Context API", "Redux", "Next.js"],
+              visible: true
             },
             {
               id: createId(),
               name: "Node.js",
               level: 4,
               description: "Building REST APIs and server-side applications",
-              keywords: ["Express", "MongoDB", "REST", "GraphQL"]
+              keywords: ["Express", "MongoDB", "REST", "GraphQL"],
+              visible: true
             }
           ],
         },
@@ -213,13 +216,15 @@ const initializeLocalStorage = (): LocalStorageData => {
               id: createId(),
               name: "English",
               level: 5,
-              description: "Native speaker"
+              description: "Native speaker",
+              visible: true
             },
             {
               id: createId(),
               name: "Spanish",
               level: 3,
-              description: "Intermediate proficiency"
+              description: "Intermediate proficiency",
+              visible: true
             }
           ],
         },
@@ -233,12 +238,14 @@ const initializeLocalStorage = (): LocalStorageData => {
             {
               id: createId(),
               name: "Open Source",
-              keywords: ["React", "TypeScript", "JavaScript"]
+              keywords: ["React", "TypeScript", "JavaScript"],
+              visible: true
             },
             {
               id: createId(),
               name: "Machine Learning",
-              keywords: ["Python", "TensorFlow", "AI"]
+              keywords: ["Python", "TensorFlow", "AI"],
+              visible: true
             }
           ],
         },
@@ -255,7 +262,8 @@ const initializeLocalStorage = (): LocalStorageData => {
               position: "Engineering Manager at Tech Corp",
               phone: "+1 (555) 987-6543",
               email: "jane.smith@techcorp.com",
-              summary: "Direct supervisor for 2 years, can vouch for technical skills and work ethic."
+              summary: "Direct supervisor for 2 years, can vouch for technical skills and work ethic.",
+              visible: true
             }
           ],
         },
@@ -278,11 +286,18 @@ const initializeLocalStorage = (): LocalStorageData => {
               keywords: ["React", "Node.js", "PostgreSQL", "Stripe"],
               startDate: "2022-03",
               endDate: "2022-08",
-              url: "https://ecommerce-demo.com"
+              url: { href: "https://ecommerce-demo.com", label: "E-commerce Platform" },
             }
           ],
         },
-        custom: {},
+        custom: {
+          id: "custom",
+          name: "Custom",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
       },
       metadata: {
         layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
@@ -325,6 +340,20 @@ const initializeLocalStorage = (): LocalStorageData => {
 
 // Load data from localStorage
 const getLocalStorageData = (): LocalStorageData => {
+  const existingData = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (existingData) {
+    try {
+      const parsed = JSON.parse(existingData);
+      // Ensure required arrays exist
+      if (!parsed.resumes || !Array.isArray(parsed.resumes)) {
+        parsed.resumes = [];
+      }
+      return parsed;
+    } catch {
+      // If parsing fails, return empty structure
+      return { user: null, resumes: [] };
+    }
+  }
   return initializeLocalStorage();
 };
 
@@ -368,11 +397,21 @@ export const localStorageService = {
   // Resume related operations
   getResumes: (): ResumeDto[] => {
     const data = getLocalStorageData();
-    return data.resumes || [];
+    // Ensure resumes is always an array
+    if (!data.resumes || !Array.isArray(data.resumes)) {
+      data.resumes = [];
+      saveLocalStorageData(data);
+    }
+    return data.resumes;
   },
 
   getResumeById: (id: string): ResumeDto | undefined => {
     const data = getLocalStorageData();
+    if (!data.resumes || !Array.isArray(data.resumes)) {
+      data.resumes = [];
+      saveLocalStorageData(data);
+      return undefined;
+    }
     return data.resumes.find(resume => resume.id === id);
   },
 
@@ -496,7 +535,14 @@ export const localStorageService = {
             separateLinks: true,
             items: [],
           },
-          custom: {},
+          custom: {
+            id: "custom",
+            name: t`Custom`,
+            visible: true,
+            columns: 1,
+            separateLinks: true,
+            items: [],
+          },
         },
         metadata: {
           layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
@@ -537,6 +583,12 @@ export const localStorageService = {
 
   updateResume: (id: string, updateData: Partial<ResumeDto>): ResumeDto => {
     const data = getLocalStorageData();
+    
+    if (!data.resumes || !Array.isArray(data.resumes)) {
+      data.resumes = [];
+      saveLocalStorageData(data);
+      throw new Error(t`Resume not found`);
+    }
     
     const resumeIndex = data.resumes.findIndex(resume => resume.id === id);
     if (resumeIndex === -1) {
