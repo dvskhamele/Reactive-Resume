@@ -144,7 +144,7 @@ const Question4 = () => {
         </p>
 
         <div className="flex flex-wrap items-start justify-start gap-x-2 gap-y-4">
-          {languages.map((language) => (
+          {Array.isArray(languages) ? languages.map((language) => (
             <a
               key={language.id}
               className="no-underline"
@@ -168,7 +168,9 @@ const Question4 = () => {
                 )}
               </div>
             </a>
-          ))}
+          )) : (
+            <p>Loading languages...</p>
+          )}
         </div>
 
         <p>

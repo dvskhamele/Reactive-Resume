@@ -29,6 +29,7 @@ export const LocaleCombobox = ({ value, onValueChange }: Props) => {
   const [search, setSearch] = useState("");
 
   const options = useMemo(() => {
+    if (!Array.isArray(languages)) return [];
     return fuzzy.filter(search, languages, {
       extract: (lang) => `${lang.name} ${lang.locale}`,
     });
@@ -46,7 +47,7 @@ export const LocaleCombobox = ({ value, onValueChange }: Props) => {
         <CommandGroup>
           <ScrollArea orientation="vertical">
             <div className="max-h-60">
-              {options.map(({ original }) => (
+              {options && options.length > 0 ? options.map(({ original }) => (
                 <CommandItem
                   key={original.locale}
                   disabled={false}
@@ -70,7 +71,7 @@ export const LocaleCombobox = ({ value, onValueChange }: Props) => {
                   {original.name}{" "}
                   <span className="ml-1 text-xs opacity-50">({original.locale})</span>
                 </CommandItem>
-              ))}
+              )) : null}
             </div>
           </ScrollArea>
         </CommandGroup>
@@ -84,6 +85,7 @@ export const LocaleComboboxPopover = ({ value, onValueChange }: Props) => {
   const [open, setOpen] = useState(false);
 
   const selected = useMemo(() => {
+    if (!Array.isArray(languages)) return undefined;
     return languages.find((lang) => lang.locale === value);
   }, [value, languages]);
 

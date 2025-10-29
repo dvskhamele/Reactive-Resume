@@ -53,16 +53,19 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!section) return null;
 
+  // Ensure items is always an array
+  const items = Array.isArray(section.items) ? section.items : [];
+  
   const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
     if (!over) return;
 
     if (active.id !== over.id) {
-      const oldIndex = section.items.findIndex((item) => item.id === active.id);
-      const newIndex = section.items.findIndex((item) => item.id === over.id);
+      const oldIndex = items.findIndex((item) => item.id === active.id);
+      const newIndex = items.findIndex((item) => item.id === over.id);
 
-      const sortedList = arrayMove(section.items as T[], oldIndex, newIndex);
+      const sortedList = arrayMove(items as T[], oldIndex, newIndex);
       setValue(`sections.${id}.items`, sortedList);
     }
   };
@@ -108,7 +111,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
       </header>
 
       <main className={cn("grid transition-opacity", !section.visible && "opacity-50")}>
-        {section.items.length === 0 && (
+        {items.length === 0 && (
           <Button
             variant="outline"
             className="gap-x-2 border-dashed py-6 leading-relaxed hover:bg-secondary-accent"
@@ -130,9 +133,9 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
           modifiers={[restrictToParentElement]}
           onDragEnd={onDragEnd}
         >
-          <SortableContext items={section.items} strategy={verticalListSortingStrategy}>
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
             <AnimatePresence>
-              {section.items.map((item, index) => (
+              {items.map((item, index) => (
                 <SectionListItem
                   key={item.id}
                   id={item.id}
@@ -158,7 +161,7 @@ export const SectionBase = <T extends SectionItem>({ id, title, description }: P
         </DndContext>
       </main>
 
-      {section.items.length > 0 && (
+      {items.length > 0 && (
         <footer className="flex items-center justify-end">
           <Button
             variant="outline"
