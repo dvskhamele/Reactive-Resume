@@ -33,6 +33,7 @@ export default defineConfig({
     esbuildOptions: {
       loader: {
         ".po": "text",
+        ".js": "jsx", // Enable JSX for .js files
       },
     },
   },
