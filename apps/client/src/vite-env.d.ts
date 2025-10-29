@@ -6,3 +6,10 @@ declare const appVersion: string;
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+// Extend the window interface to include axios for localStorage mock
+declare global {
+  interface Window {
+    axios: import("axios").AxiosInstance;
+  }
+}
