@@ -4,11 +4,11 @@
 
 echo "Building the client app..."
 
-# Navigate to the client directory
-cd apps/client
+# Set environment variable to use local storage instead of API calls
+export VITE_USE_LOCAL_STORAGE="true"
 
-# Build the client app
-pnpm build
+# Build the client app from the root directory
+pnpm build:client
 
 # Check if build was successful
 if [ $? -eq 0 ]; then
@@ -16,7 +16,7 @@ if [ $? -eq 0 ]; then
     
     # Deploy to Vercel
     echo "Deploying to Vercel..."
-    vercel --prod dist/apps/client
+    vercel --prod
     
     if [ $? -eq 0 ]; then
         echo "Deployment successful!"

@@ -130,7 +130,25 @@ const Question3 = () => (
 
 // What languages are supported on Signimus Resume Creator?
 const Question4 = () => {
-  const { languages } = useLanguages();
+  const { languages, loading } = useLanguages();
+
+  if (loading) {
+    return (
+      <AccordionItem value="4">
+        <AccordionTrigger className="text-left leading-relaxed">
+          What languages are supported on Signimus Resume Creator?
+        </AccordionTrigger>
+        <AccordionContent className="prose max-w-none dark:prose-invert">
+          <p>
+            Here are the languages currently supported by Signimus Resume Creator, along with their respective
+            completion percentages.
+          </p>
+          
+          <p>Loading languages...</p>
+        </AccordionContent>
+      </AccordionItem>
+    );
+  }
 
   return (
     <AccordionItem value="4">
@@ -144,7 +162,7 @@ const Question4 = () => {
         </p>
 
         <div className="flex flex-wrap items-start justify-start gap-x-2 gap-y-4">
-          {languages.map((language) => (
+          {Array.isArray(languages) ? languages.map((language) => (
             <a
               key={language.id}
               className="no-underline"
@@ -168,7 +186,7 @@ const Question4 = () => {
                 )}
               </div>
             </a>
-          ))}
+          )) : null}
         </div>
 
         <p>

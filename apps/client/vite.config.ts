@@ -4,6 +4,33 @@ import { lingui } from "@lingui/vite-plugin";
 import { nxViteTsPaths } from "@nx/vite/plugins/nx-tsconfig-paths.plugin";
 import react from "@vitejs/plugin-react";
 import { defineConfig, searchForWorkspaceRoot } from "vite";
+import { resolve } from "path";
+import { copyFileSync, mkdirSync } from "fs";
+
+// Function to copy support logos to the dist directory
+function copySupportLogos() {
+  return {
+    name: 'copy-support-logos',
+    closeBundle() {
+      // Create logos directory in dist
+      mkdirSync(resolve(__dirname, 'dist', 'assets', 'logos'), { recursive: true });
+      
+      // Copy logos from public directory
+      try {
+        copyFileSync(
+          resolve(__dirname, 'public', 'support-logos', 'github-sponsors-dark.svg'),
+          resolve(__dirname, 'dist', 'assets', 'logos', 'github-sponsors-dark.svg')
+        );
+        copyFileSync(
+          resolve(__dirname, 'public', 'support-logos', 'github-sponsors-light.svg'),
+          resolve(__dirname, 'dist', 'assets', 'logos', 'github-sponsors-light.svg')
+        );
+      } catch (error) {
+        console.warn('Warning: Could not copy support logos', error);
+      }
+    }
+  };
+}
 
 export default defineConfig({
   cacheDir: "../../node_modules/.vite/client",
@@ -45,6 +72,7 @@ export default defineConfig({
     }),
     lingui(),
     nxViteTsPaths(),
+    copySupportLogos(),
   ],
 
   test: {

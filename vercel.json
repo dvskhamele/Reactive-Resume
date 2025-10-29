@@ -3,17 +3,21 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node",
+      "use": "@vercel/static-build",
       "config": {
-        "buildCommand": "cd /vercel/workpath && npm install && cd apps/client && npm install && npx vite build",
-        "outputDirectory": "apps/client/dist"
+        "distDir": "apps/client/dist"
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/apps/client/dist/index.html"
+      "dest": "/index.html"
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "VITE_USE_LOCAL_STORAGE": "true"
+    }
+  }
 }
