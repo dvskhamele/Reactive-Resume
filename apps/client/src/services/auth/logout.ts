@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { axios } from "@/client/libs/axios";
+import { localStorageService } from "@/client/services/local-storage/local-storage.service";
 import { queryClient } from "@/client/libs/query-client";
 import { useAuthStore } from "@/client/stores/auth";
 
-export const logout = () => axios.post("/auth/logout");
+export const logout = () => localStorageService.logout();
 
 export const useLogout = () => {
   const setUser = useAuthStore((state) => state.setUser);

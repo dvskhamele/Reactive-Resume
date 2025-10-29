@@ -39,9 +39,284 @@ const initializeLocalStorage = (): LocalStorageData => {
     role: "user",
   };
 
+  // Create dummy resume data
+  const dummyResume: ResumeDto = {
+    id: createId(),
+    userId: defaultUser.id,
+    name: "My Professional Resume",
+    slug: "my-professional-resume",
+    visibility: "public",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    data: {
+      basics: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        phone: "+1 (555) 123-4567",
+        url: { href: "https://johndoe.portfolio", label: "Portfolio" },
+        location: "San Francisco, CA",
+        headline: "Senior Software Engineer",
+        summary: "Passionate software engineer with 5+ years of experience in building scalable web applications using modern technologies.",
+        image: "",
+        profiles: [
+          { network: "linkedin", username: "johndoe", url: "https://linkedin.com/in/johndoe", icon: "linkedin-logo" },
+          { network: "github", username: "johndoe", url: "https://github.com/johndoe", icon: "github-logo" }
+        ],
+      },
+      sections: {
+        basics: {
+          id: "basics",
+          name: "Personal Information",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        work: {
+          id: "work",
+          name: "Work Experience",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "Tech Corp",
+              location: "San Francisco, CA",
+              position: "Senior Software Engineer",
+              url: "https://techcorp.com",
+              startDate: "2022-01",
+              endDate: "Present",
+              summary: "Developed and maintained scalable web applications using React, Node.js, and modern JavaScript frameworks.",
+              keywords: ["React", "Node.js", "TypeScript", "AWS"]
+            },
+            {
+              id: createId(),
+              name: "Startup Inc.",
+              location: "San Francisco, CA",
+              position: "Software Engineer",
+              url: "https://startupinc.com",
+              startDate: "2020-06",
+              endDate: "2021-12",
+              summary: "Built new features and improved existing ones in a fast-paced startup environment.",
+              keywords: ["JavaScript", "React", "Node.js"]
+            }
+          ],
+        },
+        volunteer: {
+          id: "volunteer",
+          name: "Volunteer",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        education: {
+          id: "education",
+          name: "Education",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              institution: "University of California",
+              location: "Berkeley, CA",
+              studyType: "Bachelor's Degree",
+              area: "Computer Science",
+              url: "https://berkeley.edu",
+              startDate: "2016-09",
+              endDate: "2020-05",
+              score: "3.8/4.0",
+              summary: "Relevant courses: Data Structures, Algorithms, Web Development, Software Engineering",
+              keywords: ["Data Structures", "Algorithms", "Web Development"]
+            }
+          ],
+        },
+        awards: {
+          id: "awards",
+          name: "Awards",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        certificates: {
+          id: "certificates",
+          name: "Certificates",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "AWS Certified Solutions Architect",
+              issuer: "Amazon Web Services",
+              url: "https://aws.amazon.com",
+              date: "2022-03"
+            },
+            {
+              id: createId(),
+              name: "Google Professional Cloud Developer",
+              issuer: "Google Cloud",
+              url: "https://cloud.google.com",
+              date: "2021-08"
+            }
+          ],
+        },
+        publications: {
+          id: "publications",
+          name: "Publications",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        skills: {
+          id: "skills",
+          name: "Skills",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "JavaScript",
+              level: 5,
+              description: "Advanced knowledge of JavaScript including ES6+ features",
+              keywords: ["ES6", "Async/Await", "Closures", "Promises"]
+            },
+            {
+              id: createId(),
+              name: "React",
+              level: 5,
+              description: "Expert in React and related ecosystem",
+              keywords: ["Hooks", "Context API", "Redux", "Next.js"]
+            },
+            {
+              id: createId(),
+              name: "Node.js",
+              level: 4,
+              description: "Building REST APIs and server-side applications",
+              keywords: ["Express", "MongoDB", "REST", "GraphQL"]
+            }
+          ],
+        },
+        languages: {
+          id: "languages",
+          name: "Languages",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "English",
+              level: 5,
+              description: "Native speaker"
+            },
+            {
+              id: createId(),
+              name: "Spanish",
+              level: 3,
+              description: "Intermediate proficiency"
+            }
+          ],
+        },
+        interests: {
+          id: "interests",
+          name: "Interests",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "Open Source",
+              keywords: ["React", "TypeScript", "JavaScript"]
+            },
+            {
+              id: createId(),
+              name: "Machine Learning",
+              keywords: ["Python", "TensorFlow", "AI"]
+            }
+          ],
+        },
+        references: {
+          id: "references",
+          name: "References",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "Jane Smith",
+              position: "Engineering Manager at Tech Corp",
+              phone: "+1 (555) 987-6543",
+              email: "jane.smith@techcorp.com",
+              summary: "Direct supervisor for 2 years, can vouch for technical skills and work ethic."
+            }
+          ],
+        },
+        projects: {
+          id: "projects",
+          name: "Projects",
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [
+            {
+              id: createId(),
+              name: "E-commerce Platform",
+              description: "Full-stack e-commerce platform with React, Node.js, and PostgreSQL",
+              highlights: [
+                "Implemented secure payment processing",
+                "Built with modern security practices",
+                "Achieved 99.9% uptime"
+              ],
+              keywords: ["React", "Node.js", "PostgreSQL", "Stripe"],
+              startDate: "2022-03",
+              endDate: "2022-08",
+              url: "https://ecommerce-demo.com"
+            }
+          ],
+        },
+        custom: {},
+      },
+      metadata: {
+        layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+        page: {
+          slideshow: {
+            enabled: false,
+            interval: 5,
+          },
+          numbering: "none",
+          pagination: false,
+          filename: "John_Doe_Resume",
+          format: "A4",
+          optimize: true,
+          orientation: "portrait",
+          margins: 24.5,
+          print: false,
+          slides: true,
+        },
+        theme: {
+          background: "#1e293b",
+          primary: "#22c55e",
+          text: {
+            primary: "#1e293b",
+            secondary: "#64748b",
+            accent: "#22c55e",
+          },
+        },
+      },
+    },
+  };
+
   const initialData: LocalStorageData = {
     user: defaultUser,
-    resumes: [],
+    resumes: [dummyResume],
   };
 
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialData));
@@ -295,6 +570,23 @@ export const localStorageService = {
     return deletedResume;
   },
 
+  lockResume: (id: string, set: boolean): ResumeDto => {
+    const data = getLocalStorageData();
+    
+    const resumeIndex = data.resumes.findIndex(resume => resume.id === id);
+    if (resumeIndex === -1) {
+      throw new Error(t`Resume not found`);
+    }
+
+    // For client-only implementation, we'll just update the locked status
+    // In a real implementation we might have an isLocked field, but since
+    // the schema doesn't have it, we'll just return the unchanged resume
+    const resume = data.resumes[resumeIndex];
+    
+    saveLocalStorageData(data);
+    return resume;
+  },
+
   // Authentication related operations
   login: (email: string, password: string) => {
     // For local storage, we just need to ensure user data exists
@@ -344,6 +636,13 @@ export const localStorageService = {
     // For local storage, we don't need to do anything special
     // We could clear user data if needed, but for now we'll keep it
     return { message: "Logged out successfully" };
+  },
+
+  getDefaultFeatureFlags: () => {
+    return {
+      isSignupsDisabled: false,
+      isEmailAuthDisabled: false,
+    };
   },
 
   clearAllData: () => {

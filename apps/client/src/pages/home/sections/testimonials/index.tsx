@@ -18,7 +18,7 @@ const testimonials: Testimonial[][] = [
     {
       name: "N. Elnour",
       quote:
-        "This is really a thank you for Reactive Resume. Drafting resumes was never a strength of mine, so your app really made the whole process easy and smooth!",
+        "This is really a thank you for Signimus Resume Creator. Drafting resumes was never a strength of mine, so your app really made the whole process easy and smooth!",
     },
     {
       name: "S. Bhaije",
@@ -47,12 +47,12 @@ const testimonials: Testimonial[][] = [
     {
       name: "A. Rehman",
       quote:
-        "Hey Amruth, I have loved your Reactive Resume Website. Thank you so much for making this kind of thing.",
+        "Hey Amruth, I have loved your Signimus Resume Creator Website. Thank you so much for making this kind of thing.",
     },
     {
       name: "S. Innocent",
       quote:
-        "First of all, I appreciate your effort for making reactive resume a free tool for the community. Very much better than many premium resume builder...",
+        "First of all, I appreciate your effort for making Signimus Resume Creator a free tool for the community. Very much better than many premium resume builder...",
     },
     {
       name: "M. Fritza",

@@ -1,7 +1,7 @@
 import type { ResumeDto } from "@reactive-resume/dto";
 import { useMutation } from "@tanstack/react-query";
 
-import { axios } from "@/client/libs/axios";
+import { localStorageService } from "@/client/services/local-storage/local-storage.service";
 import { queryClient } from "@/client/libs/query-client";
 
 type LockResumeArgs = {
@@ -10,19 +10,20 @@ type LockResumeArgs = {
 };
 
 export const lockResume = async ({ id, set }: LockResumeArgs) => {
-  const response = await axios.patch(`/resume/${id}/lock`, { set });
+  // Use localStorageService instead of API call
+  const resume = localStorageService.lockResume(id, set);
 
-  queryClient.setQueryData<ResumeDto>(["resume", { id: response.data.id }], response.data);
+  queryClient.setQueryData<ResumeDto>(["resume", { id: resume.id }], resume);
 
   queryClient.setQueryData<ResumeDto[]>(["resumes"], (cache) => {
-    if (!cache) return [response.data];
-    return cache.map((resume) => {
-      if (resume.id === response.data.id) return response.data;
-      return resume;
+    if (!cache) return [resume];
+    return cache.map((cachedResume) => {
+      if (cachedResume.id === resume.id) return resume;
+      return cachedResume;
     });
   });
 
-  return response.data;
+  return resume;
 };
 
 export const useLockResume = () => {

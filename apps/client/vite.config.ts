@@ -11,6 +11,9 @@ export default defineConfig({
   build: {
     sourcemap: true,
     emptyOutDir: true,
+    rollupOptions: {
+      // Add any specific rollup configuration if needed
+    }
   },
 
   define: {

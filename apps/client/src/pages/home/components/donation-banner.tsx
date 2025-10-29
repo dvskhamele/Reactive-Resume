@@ -14,7 +14,7 @@ export const DonationBanner = () => (
   >
     <HandHeartIcon weight="bold" size={14} className="shrink-0" />
     <span>
-      If this project has helped you, please consider donating to Reactive Resume as we're running
+      If this project has helped you, please consider donating to Signimus Resume Creator as we're running
       out of server resources with the increasing number of users.
     </span>
   </motion.a>
