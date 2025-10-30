@@ -31,8 +31,8 @@ const initializeLocalStorage = (): LocalStorageData => {
     username: "signimususer",
     locale: "en-US",
     picture: null,
-    provider: "local",
-    emailVerified: null,
+    provider: "email", // Changed from "local" to "email" to match allowed values
+    emailVerified: false, // Changed from null to false
     twoFactorEnabled: false,
     createdAt: new Date(),
     updatedAt: new Date(),
