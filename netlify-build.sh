@@ -4,7 +4,6 @@
 set -e # Exit on any error
 
 echo "Installing dependencies..."
-cd /Users/test/startups/Reactive-Resume
 npm install -g pnpm
 pnpm install
 
@@ -13,10 +12,10 @@ export VITE_USE_LOCAL_STORAGE="true"
 pnpm build:client
 
 echo "Build completed successfully!"
-echo "Build output is in: /Users/test/startups/Reactive-Resume/apps/client/dist"
+echo "Build output is in: dist/apps/client"
 
 # Verify the build was successful
-if [ -f "/Users/test/startups/Reactive-Resume/apps/client/dist/index.html" ]; then
+if [ -f "dist/apps/client/index.html" ]; then
     echo "✓ index.html found - build successful"
 else
     echo "✗ index.html not found - build failed"
