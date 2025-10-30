@@ -7,9 +7,8 @@ echo "Installing dependencies..."
 npm install -g pnpm
 pnpm install
 
-echo "Building client app with localStorage enabled..."
-export VITE_USE_LOCAL_STORAGE="true"
-pnpm build:client
+echo "Building app for Netlify deployment..."
+VITE_USE_LOCAL_STORAGE=true pnpm build:netlify
 
 echo "Build completed successfully!"
 echo "Build output is in: dist/apps/client"

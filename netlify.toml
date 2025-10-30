@@ -1,11 +1,11 @@
 [build]
   base = "."
-  command = "export VITE_USE_LOCAL_STORAGE=true && pnpm install && npx nx build utils && npx nx build schema && npx nx build dto && npx nx build parser && npx nx build ui && npx nx build hooks && npx nx build client"
+  command = "pnpm install && pnpm build:netlify"
   publish = "dist/apps/client"
   ignore = "git diff --quiet HEAD^ HEAD 2>/dev/null || echo 'Changes detected, proceeding with build'"
 
 [context.production]
-  command = "export VITE_USE_LOCAL_STORAGE=true && pnpm install && npx nx build utils && npx nx build schema && npx nx build dto && npx nx build parser && npx nx build ui && npx nx build hooks && npx nx build client"
+  command = "pnpm install && pnpm build:netlify"
 
 [[redirects]]
   from = "/*"
