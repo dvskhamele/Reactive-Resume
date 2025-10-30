@@ -70,7 +70,7 @@ class LocalStorageService {
 
   deleteResume(id: string): void {
     const data = this.getData();
-    data.resumes = data.resumes?.filter(resume => resume.id !== id) || [];
+    data.resumes = data.resumes?.filter((resume: ResumeDto) => resume.id !== id) || [];
     this.saveData(data);
   }
 
@@ -240,71 +240,81 @@ const createMockResponse = <T>(data: T): AxiosResponse<T> => {
   };
 };
 
+// Define a more complete mockAxiosInstance with proper typing
 export const mockAxiosInstance: AxiosInstance = {
   // Implement essential methods for resume operations
-  get: async <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
+  get: async <T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R> => {
     if (url === '/resume') {
       const resumes = localStorageService.getResumes();
-      return createMockResponse<T>(resumes as unknown as T);
+      return createMockResponse<T>(resumes as T) as R;
     } else if (url.startsWith('/resume/')) {
       const id = url.split('/')[2];
       const resume = localStorageService.getResume(id);
       if (resume) {
-        return createMockResponse<T>(resume as unknown as T);
+        return createMockResponse<T>(resume as T) as R;
       } else {
         throw { response: { status: 404, data: { message: 'Resume not found' } } };
       }
     } else if (url === '/user/me') {
       const user = localStorageService.getUser();
-      return createMockResponse<T>(user as unknown as T);
+      return createMockResponse<T>(user as T) as R;
     }
     
     // Return empty response for other endpoints
-    return createMockResponse<T>(undefined as unknown as T);
+    return createMockResponse<T>(undefined as T) as R;
   },
   
-  post: async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
+  post: async <T, R = AxiosResponse<T>, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<R> => {
     if (url === '/resume' && data) {
-      const resume = localStorageService.createResume(data.name || 'New Resume');
-      return createMockResponse<T>(resume as unknown as T);
+      const resume = localStorageService.createResume((data as any).name || 'New Resume');
+      return createMockResponse<T>(resume as T) as R;
     } else if (url === '/auth/login') {
       // Return mock auth response
       return createMockResponse<T>({ 
         user: localStorageService.getUser(), 
         accessToken: 'local-token',
         refreshToken: 'local-refresh-token'
-      } as unknown as T);
+      } as T) as R;
     }
     
-    return createMockResponse<T>(undefined as unknown as T);
+    return createMockResponse<T>(undefined as T) as R;
   },
   
-  patch: async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
+  patch: async <T, R = AxiosResponse<T>, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<R> => {
     if (url.startsWith('/resume/')) {
       const id = url.split('/')[2];
       const resume = localStorageService.updateResume(id, data);
-      return createMockResponse<T>(resume as unknown as T);
+      return createMockResponse<T>(resume as T) as R;
     }
     
-    return createMockResponse<T>(undefined as unknown as T);
+    return createMockResponse<T>(undefined as T) as R;
   },
   
-  delete: async <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
+  delete: async <T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): Promise<R> => {
     if (url.startsWith('/resume/')) {
       const id = url.split('/')[2];
       localStorageService.deleteResume(id);
       // Return the deleted resume
       const resume = localStorageService.getResume(id); 
-      return createMockResponse<T>(resume as unknown as T);
+      return createMockResponse<T>(resume as T) as R;
     }
     
-    return createMockResponse<T>(undefined as unknown as T);
+    return createMockResponse<T>(undefined as T) as R;
   },
   
-  // Additional axios interface methods
   defaults: {
     headers: {
-      common: { 'Content-Type': 'application/json' }
+      common: { 'Content-Type': 'application/json' } as any,
+      delete: {} as any,
+      get: {} as any,
+      head: {} as any,
+      post: {} as any,
+      put: {} as any,
+      patch: {} as any,
+      options: {} as any,
+      purge: {} as any,
+      link: {} as any,
+      unlink: {} as any,
     },
     baseURL: "/api",
     timeout: 10000,
@@ -323,7 +333,7 @@ export const mockAxiosInstance: AxiosInstance = {
     }
   },
   getUri: (config?: AxiosRequestConfig) => config?.url || "",
-  request: async <T>(config?: AxiosRequestConfig) => {
+  request: async <T, R = AxiosResponse<T>, D = any>(config?: AxiosRequestConfig<D>): Promise<R> => {
     if (config?.method === 'GET') {
       return (mockAxiosInstance.get as any)(config.url, config);
     } else if (config?.method === 'POST') {
@@ -335,16 +345,16 @@ export const mockAxiosInstance: AxiosInstance = {
     } else if (config?.method === 'DELETE') {
       return (mockAxiosInstance.delete as any)(config.url, config);
     }
-    return createMockResponse<T>(undefined as unknown as T);
+    return createMockResponse<T>(undefined as T) as R;
   },
-  put: async <T>(url: string, data?: any, config?: AxiosRequestConfig) => {
+  put: async <T, R = AxiosResponse<T>, D = any>(url: string, data?: D, config?: AxiosRequestConfig<D>): Promise<R> => {
     // Simplified: treat PUT as POST
-    return mockAxiosInstance.post<T>(url, data, config);
+    return mockAxiosInstance.post<T, R, D>(url, data, config);
   },
-  head: async <T>(url: string, config?: AxiosRequestConfig) => {
-    return createMockResponse<T>(undefined as unknown as T);
+  head: <T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): R => {
+    return createMockResponse<T>(undefined as T) as R;
   },
-  options: async <T>(url: string, config?: AxiosRequestConfig) => {
-    return createMockResponse<T>(undefined as unknown as T);
+  options: <T, R = AxiosResponse<T>>(url: string, config?: AxiosRequestConfig): R => {
+    return createMockResponse<T>(undefined as T) as R;
   }
 };
