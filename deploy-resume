@@ -1,0 +1,5 @@
+#!/bin/bash
+# Simple alias for deploying Reactive-Resume app
+
+# Navigate to project directory and run deployment
+cd /Users/test/startups/Reactive-Resume && ./deploy-permanent.sh
