@@ -378,31 +378,7 @@ export const simpleLocalStorageService = {
     return deletedResume;
   },
 
-  // Additional methods needed
-  updateUser: (userData: Partial<UserDto>): UserDto => {
-    const data = getStorageData();
-    if (!data.user) {
-      // Create a default user if none exists
-      data.user = {
-        id: createId(),
-        email: "local@signimus.com",
-        name: "Signimus User",
-        username: "signimususer",
-        locale: "en-US",
-        picture: null,
-        provider: "local",
-        emailVerified: null,
-        twoFactorEnabled: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        role: "user",
-      };
-    }
 
-    Object.assign(data.user, userData, { updatedAt: new Date() });
-    saveStorageData(data);
-    return data.user;
-  },
 
   // Auth operations
   login: (email: string, password: string) => {
