@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signimus Resume Creator</title>
+  <style>
+    :root {
+      --background: #f9fafb;
+      --foreground: #1e293b;
+      --primary: #22c55e;
+      --secondary: #64748b;
+      --accent: #22c55e;
+      --border: #e2e8f0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 30px;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--border);
+      color: var(--foreground);
+    }
+    
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 30px;
+    }
+    
+    .sidebar {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .main-content {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .resume-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .resume-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.2s;
+    }
+    
+    .resume-card:hover {
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+    
+    .resume-card h3 {
+      margin: 0 0 10px 0;
+      color: var(--foreground);
+    }
+    
+    .resume-card p {
+      color: var(--secondary);
+      margin: 5px 0;
+      font-size: 0.9rem;
+    }
+    
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .resume-preview {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      background: white;
+      margin-top: 20px;
+    }
+    
+    .notification {
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .notification.success {
+      background-color: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    
+    .notification.error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">Signimus Resume Creator</div>
+      <div class="auth-buttons">
+        <button class="btn-primary" id="loginBtn">Login</button>
+        <button class="btn-outline" id="registerBtn">Register</button>
+      </div>
+    </header>
+    
+    <div id="authSection" class="hidden">
+      <div class="main-content">
+        <h2 id="authTitle">Login to Your Account</h2>
+        <div id="authNotification" class="notification hidden"></div>
+        <form id="authForm">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn-primary" id="authSubmitBtn">Login</button>
+          </div>
+        </form>
+        <p>Don't have an account? <a href="#" id="toggleAuth">Register here</a></p>
+      </div>
+    </div>
+    
+    <div id="dashboardSection" class="hidden">
+      <div class="dashboard">
+        <div class="sidebar">
+          <h2 class="section-title">Dashboard</h2>
+          <button class="btn-primary" id="createResumeBtn" style="width: 100%;">Create New Resume</button>
+          <div style="margin-top: 20px;">
+            <h3>Account</h3>
+            <p id="userName"></p>
+            <button class="btn-outline" id="logoutBtn" style="width: 100%;">Logout</button>
+          </div>
+        </div>
+        
+        <div class="main-content">
+          <h2 class="section-title">Your Resumes</h2>
+          <div id="resumeNotification" class="notification hidden"></div>
+          <div id="resumeList" class="resume-list">
+            <!-- Resumes will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="resumeEditorSection" class="hidden">
+      <div class="main-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <h2>Edit Resume</h2>
+          <div>
+            <button class="btn-secondary" id="backToDashboardBtn">Back to Dashboard</button>
+            <button class="btn-primary" id="saveResumeBtn" style="margin-left: 10px;">Save Resume</button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="resumeName">Resume Name</label>
+          <input type="text" id="resumeName" placeholder="e.g. John Doe's Resume">
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="emailAddress">Email</label>
+            <input type="email" id="emailAddress" placeholder="john.doe@example.com">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="headline">Headline</label>
+          <input type="text" id="headline" placeholder="Senior Software Engineer">
+        </div>
+        
+        <div class="form-group">
+          <label for="summary">Summary</label>
+          <textarea id="summary" placeholder="A brief summary of your professional background and skills..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="workExperience">Work Experience</label>
+          <textarea id="workExperience" placeholder="Company Name | Position | Dates
+Description of your responsibilities and achievements..."></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="education">Education</label>
+          <textarea id="education" placeholder="University Name | Degree | Dates
+Description of your academic achievements..."></textarea>
+        </div>
+        
+        <div class="resume-preview">
+          <h3>Preview</h3>
+          <div id="resumePreview">
+            <h1 id="previewName">[Name]</h1>
+            <p id="previewEmail">[Email]</p>
+            <p id="previewHeadline">[Headline]</p>
+            <h2>Summary</h2>
+            <p id="previewSummary">[Summary]</p>
+            <h2>Work Experience</h2>
+            <pre id="previewWork">[Work Experience]</pre>
+            <h2>Education</h2>
+            <pre id="previewEducation">[Education]</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Local storage service for managing resume data
+    const localStorageService = {
+      // User management
+      getUser: () => {
+        const data = localStorage.getItem('signimus-resume-data');
+        if (data) {
+          const parsed = JSON.parse(data);
+          return parsed.user;
+        }
+        return null;
+      },
+      
+      setUser: (user) => {
+        const data = localStorage.getItem('signimus-resume-data') ? JSON.parse(localStorage.getItem('signimus-resume-data')) : { user: null, resumes: [] };
+        data.user = user;
+        localStorage.setItem('signimus-resume-data', JSON.stringify(data));
+      },
+      
+      // Resume management
+      getResumes: () => {
+        const data = localStorage.getItem('signimus-resume-data');
+        if (data) {
+          const parsed = JSON.parse(data);
+          return parsed.resumes || [];
+        }
+        return [];
+      },
+      
+      getResumeById: (id) => {
+        const resumes = localStorageService.getResumes();
+        return resumes.find(resume => resume.id === id) || null;
+      },
+      
+      createResume: (name) => {
+        const id = 'resume-' + Date.now();
+        const resume = {
+          id: id,
+          name: name || 'Untitled Resume',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          data: {
+            fullName: '',
+            emailAddress: '',
+            headline: '',
+            summary: '',
+            workExperience: '',
+            education: ''
+          }
+        };
+        
+        const data = localStorage.getItem('signimus-resume-data') ? JSON.parse(localStorage.getItem('signimus-resume-data')) : { user: null, resumes: [] };
+        data.resumes = data.resumes || [];
+        data.resumes.push(resume);
+        localStorage.setItem('signimus-resume-data', JSON.stringify(data));
+        
+        return resume;
+      },
+      
+      updateResume: (id, updateData) => {
+        const data = localStorage.getItem('signimus-resume-data') ? JSON.parse(localStorage.getItem('signimus-resume-data')) : { user: null, resumes: [] };
+        data.resumes = data.resumes || [];
+        
+        const resumeIndex = data.resumes.findIndex(resume => resume.id === id);
+        if (resumeIndex !== -1) {
+          data.resumes[resumeIndex] = { 
+            ...data.resumes[resumeIndex], 
+            ...updateData,
+            updatedAt: new Date().toISOString()
+          };
+          localStorage.setItem('signimus-resume-data', JSON.stringify(data));
+          return data.resumes[resumeIndex];
+        }
+        return null;
+      },
+      
+      deleteResume: (id) => {
+        const data = localStorage.getItem('signimus-resume-data') ? JSON.parse(localStorage.getItem('signimus-resume-data')) : { user: null, resumes: [] };
+        data.resumes = data.resumes || [];
+        
+        const resumeIndex = data.resumes.findIndex(resume => resume.id === id);
+        if (resumeIndex !== -1) {
+          const deletedResume = data.resumes[resumeIndex];
+          data.resumes.splice(resumeIndex, 1);
+          localStorage.setItem('signimus-resume-data', JSON.stringify(data));
+          return deletedResume;
+        }
+        return null;
+      }
+    };
+    
+    // DOM Elements
+    const authSection = document.getElementById('authSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const resumeEditorSection = document.getElementById('resumeEditorSection');
+    const authForm = document.getElementById('authForm');
+    const authNotification = document.getElementById('authNotification');
+    const resumeNotification = document.getElementById('resumeNotification');
+    const resumeList = document.getElementById('resumeList');
+    const userName = document.getElementById('userName');
+    
+    // Buttons
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const toggleAuth = document.getElementById('toggleAuth');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const createResumeBtn = document.getElementById('createResumeBtn');
+    const backToDashboardBtn = document.getElementById('backToDashboardBtn');
+    const saveResumeBtn = document.getElementById('saveResumeBtn');
+    
+    // Form fields
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const authTitle = document.getElementById('authTitle');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    
+    // Resume editor fields
+    const resumeNameInput = document.getElementById('resumeName');
+    const fullNameInput = document.getElementById('fullName');
+    const emailAddressInput = document.getElementById('emailAddress');
+    const headlineInput = document.getElementById('headline');
+    const summaryInput = document.getElementById('summary');
+    const workExperienceInput = document.getElementById('workExperience');
+    const educationInput = document.getElementById('education');
+    
+    // Preview elements
+    const previewName = document.getElementById('previewName');
+    const previewEmail = document.getElementById('previewEmail');
+    const previewHeadline = document.getElementById('previewHeadline');
+    const previewSummary = document.getElementById('previewSummary');
+    const previewWork = document.getElementById('previewWork');
+    const previewEducation = document.getElementById('previewEducation');
+    
+    // Current state
+    let currentUser = null;
+    let currentResume = null;
+    let isRegisterMode = false;
+    
+    // Initialize the app
+    function initApp() {
+      // Check if user is already logged in
+      currentUser = localStorageService.getUser();
+      if (currentUser) {
+        showDashboard();
+      } else {
+        showAuth();
+      }
+      
+      // Setup event listeners
+      setupEventListeners();
+    }
+    
+    // Setup event listeners
+    function setupEventListeners() {
+      // Auth buttons
+      loginBtn.addEventListener('click', () => {
+        isRegisterMode = false;
+        showAuth();
+      });
+      
+      registerBtn.addEventListener('click', () => {
+        isRegisterMode = true;
+        showAuth();
+      });
+      
+      toggleAuth.addEventListener('click', (e) => {
+        e.preventDefault();
+        isRegisterMode = !isRegisterMode;
+        updateAuthForm();
+      });
+      
+      authForm.addEventListener('submit', handleAuth);
+      
+      // Dashboard buttons
+      logoutBtn.addEventListener('click', handleLogout);
+      createResumeBtn.addEventListener('click', handleCreateResume);
+      
+      // Editor buttons
+      backToDashboardBtn.addEventListener('click', showDashboard);
+      saveResumeBtn.addEventListener('click', handleSaveResume);
+      
+      // Real-time preview updates
+      resumeNameInput.addEventListener('input', updatePreview);
+      fullNameInput.addEventListener('input', updatePreview);
+      emailAddressInput.addEventListener('input', updatePreview);
+      headlineInput.addEventListener('input', updatePreview);
+      summaryInput.addEventListener('input', updatePreview);
+      workExperienceInput.addEventListener('input', updatePreview);
+      educationInput.addEventListener('input', updatePreview);
+    }
+    
+    // Show auth section
+    function showAuth() {
+      // Hide other sections
+      dashboardSection.classList.add('hidden');
+      resumeEditorSection.classList.add('hidden');
+      
+      // Show auth section
+      authSection.classList.remove('hidden');
+      
+      // Update form based on mode
+      updateAuthForm();
+    }
+    
+    // Update auth form based on mode
+    function updateAuthForm() {
+      if (isRegisterMode) {
+        authTitle.textContent = 'Create New Account';
+        authSubmitBtn.textContent = 'Register';
+        toggleAuth.textContent = 'Login here';
+      } else {
+        authTitle.textContent = 'Login to Your Account';
+        authSubmitBtn.textContent = 'Login';
+        toggleAuth.textContent = 'Register here';
+      }
+      
+      // Clear form
+      authForm.reset();
+      hideNotification(authNotification);
+    }
+    
+    // Handle authentication
+    function handleAuth(e) {
+      e.preventDefault();
+      
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      
+      if (!email || !password) {
+        showNotification(authNotification, 'Please fill in all fields', 'error');
+        return;
+      }
+      
+      // For demo purposes, we'll accept any email/password combination
+      // In a real app, you would validate against a backend or use proper authentication
+      
+      // Create or update user
+      const user = {
+        id: 'user-' + Date.now(),
+        email: email,
+        name: email.split('@')[0],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      localStorageService.setUser(user);
+      currentUser = user;
+      
+      showNotification(authNotification, isRegisterMode ? 'Account created successfully!' : 'Logged in successfully!', 'success');
+      
+      // Small delay to show success message
+      setTimeout(() => {
+        showDashboard();
+      }, 1000);
+    }
+    
+    // Handle logout
+    function handleLogout() {
+      localStorageService.setUser(null);
+      currentUser = null;
+      showAuth();
+    }
+    
+    // Show dashboard
+    function showDashboard() {
+      // Hide other sections
+      authSection.classList.add('hidden');
+      resumeEditorSection.classList.add('hidden');
+      
+      // Show dashboard
+      dashboardSection.classList.remove('hidden');
+      
+      // Update user info
+      if (currentUser) {
+        userName.textContent = `Welcome, ${currentUser.name}!`;
+      }
+      
+      // Load resumes
+      loadResumes();
+    }
+    
+    // Load resumes into the dashboard
+    function loadResumes() {
+      const resumes = localStorageService.getResumes();
+      
+      // Clear current list
+      resumeList.innerHTML = '';
+      
+      if (resumes.length === 0) {
+        resumeList.innerHTML = '<p>No resumes found. Create your first resume!</p>';
+        return;
+      }
+      
+      // Add each resume to the list
+      resumes.forEach(resume => {
+        const resumeCard = document.createElement('div');
+        resumeCard.className = 'resume-card';
+        resumeCard.innerHTML = `
+          <h3>${resume.name}</h3>
+          <p>Created: ${new Date(resume.createdAt).toLocaleDateString()}</p>
+          <p>Updated: ${new Date(resume.updatedAt).toLocaleDateString()}</p>
+          <div class="card-actions">
+            <button class="btn-primary edit-resume-btn" data-id="${resume.id}">Edit</button>
+            <button class="btn-secondary delete-resume-btn" data-id="${resume.id}">Delete</button>
+          </div>
+        `;
+        resumeList.appendChild(resumeCard);
+      });
+      
+      // Add event listeners to the buttons
+      document.querySelectorAll('.edit-resume-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.getAttribute('data-id');
+          handleEditResume(id);
+        });
+      });
+      
+      document.querySelectorAll('.delete-resume-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = e.target.getAttribute('data-id');
+          handleDeleteResume(id);
+        });
+      });
+    }
+    
+    // Handle create resume
+    function handleCreateResume() {
+      const resume = localStorageService.createResume('New Resume');
+      showResumeEditor(resume);
+    }
+    
+    // Handle edit resume
+    function handleEditResume(id) {
+      const resume = localStorageService.getResumeById(id);
+      if (resume) {
+        showResumeEditor(resume);
+      }
+    }
+    
+    // Handle delete resume
+    function handleDeleteResume(id) {
+      if (confirm('Are you sure you want to delete this resume?')) {
+        localStorageService.deleteResume(id);
+        showNotification(resumeNotification, 'Resume deleted successfully!', 'success');
+        loadResumes();
+      }
+    }
+    
+    // Show resume editor
+    function showResumeEditor(resume) {
+      currentResume = resume;
+      
+      // Hide other sections
+      dashboardSection.classList.add('hidden');
+      
+      // Show editor
+      resumeEditorSection.classList.remove('hidden');
+      
+      // Populate form with resume data
+      resumeNameInput.value = resume.name;
+      fullNameInput.value = resume.data.fullName || '';
+      emailAddressInput.value = resume.data.emailAddress || '';
+      headlineInput.value = resume.data.headline || '';
+      summaryInput.value = resume.data.summary || '';
+      workExperienceInput.value = resume.data.workExperience || '';
+      educationInput.value = resume.data.education || '';
+      
+      // Update preview
+      updatePreview();
+    }
+    
+    // Update resume preview
+    function updatePreview() {
+      previewName.textContent = fullNameInput.value || '[Name]';
+      previewEmail.textContent = emailAddressInput.value || '[Email]';
+      previewHeadline.textContent = headlineInput.value || '[Headline]';
+      previewSummary.textContent = summaryInput.value || '[Summary]';
+      previewWork.textContent = workExperienceInput.value || '[Work Experience]';
+      previewEducation.textContent = educationInput.value || '[Education]';
+    }
+    
+    // Handle save resume
+    function handleSaveResume() {
+      if (!currentResume) return;
+      
+      const updatedData = {
+        name: resumeNameInput.value,
+        data: {
+          fullName: fullNameInput.value,
+          emailAddress: emailAddressInput.value,
+          headline: headlineInput.value,
+          summary: summaryInput.value,
+          workExperience: workExperienceInput.value,
+          education: educationInput.value
+        }
+      };
+      
+      const updatedResume = localStorageService.updateResume(currentResume.id, updatedData);
+      if (updatedResume) {
+        currentResume = updatedResume;
+        showNotification(resumeNotification, 'Resume saved successfully!', 'success');
+        // Reload dashboard to show updated resume list
+        setTimeout(showDashboard, 1000);
+      } else {
+        showNotification(resumeNotification, 'Failed to save resume', 'error');
+      }
+    }
+    
+    // Show notification
+    function showNotification(element, message, type) {
+      element.textContent = message;
+      element.className = `notification ${type}`;
+      element.classList.remove('hidden');
+      
+      // Auto-hide after 3 seconds
+      setTimeout(() => {
+        hideNotification(element);
+      }, 3000);
+    }
+    
+    // Hide notification
+    function hideNotification(element) {
+      element.classList.add('hidden');
+    }
+    
+    // Initialize the app when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
