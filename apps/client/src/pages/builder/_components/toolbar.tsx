@@ -138,7 +138,7 @@ export const BuilderToolbar = () => {
         <Tooltip content={t`Toggle Page Break Line`}>
           <Toggle
             className="rounded-none"
-            pressed={pageOptions.breakLine}
+            pressed={!!pageOptions?.breakLine}
             onPressedChange={(pressed) => {
               setValue("metadata.page.options.breakLine", pressed);
             }}
@@ -150,7 +150,7 @@ export const BuilderToolbar = () => {
         <Tooltip content={t`Toggle Page Numbers`}>
           <Toggle
             className="rounded-none"
-            pressed={pageOptions.pageNumbers}
+            pressed={!!pageOptions?.pageNumbers}
             onPressedChange={(pressed) => {
               setValue("metadata.page.options.pageNumbers", pressed);
             }}
