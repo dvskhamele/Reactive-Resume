@@ -159,30 +159,38 @@ export const useResumeStore = create<ResumeStore>()(
           metadata: {
             layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
             page: {
-              slideshow: {
-                enabled: false,
-                interval: 5,
+              options: {
+                breakLine: false,
+                pageNumbers: false,
               },
-              numbering: "none",
-              pagination: false,
-              filename: "Resume",
               format: "a4",
-              optimize: true,
-              orientation: "portrait",
-              margins: 24.5,
-              print: false,
-              slides: true,
+              margin: 24.5,
             },
             template: "catalyst",
             theme: {
-              background: "#1e293b",
+              text: "#1e293b",
               primary: "#22c55e",
-              text: {
-                primary: "#1e293b",
-                secondary: "#64748b",
-                accent: "#22c55e",
+              background: "#1e293b",
+            },
+            css: {
+              visible: true,
+              columns: 1,
+              separateLinks: true,
+              items: [],
+            },
+            typography: {
+              font: {
+                family: "IBM Plex Sans",
+                size: 14,
+                lineHeight: 1.5,
+              },
+              headings: {
+                family: "IBM Plex Sans",
+                size: 24,
+                weight: 600,
               },
             },
+            notes: "",
           },
         },
       } as ResumeDto,
