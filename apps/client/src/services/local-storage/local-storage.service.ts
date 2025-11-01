@@ -44,8 +44,10 @@ const initializeLocalStorage = (): LocalStorageData => {
     id: createId(),
     userId: defaultUser.id,
     name: "My Professional Resume",
+    title: "My Professional Resume", // Add missing title field
     slug: "my-professional-resume",
     visibility: "public",
+    locked: false, // Add missing locked field
     createdAt: new Date(),
     updatedAt: new Date(),
     data: {
@@ -95,7 +97,7 @@ const initializeLocalStorage = (): LocalStorageData => {
               name: "Startup Inc.",
               location: "San Francisco, CA",
               position: "Software Engineer",
-              url: "https://startupinc.com",
+              url: { href: "https://startupinc.com", label: "Startup Inc." }, // Fixed inconsistent url format
               startDate: "2020-06",
               endDate: "2021-12",
               summary: "Built new features and improved existing ones in a fast-paced startup environment.",
@@ -309,13 +311,14 @@ const initializeLocalStorage = (): LocalStorageData => {
           numbering: "none",
           pagination: false,
           filename: "John_Doe_Resume",
-          format: "A4",
+          format: "a4", // Fixed case-sensitive value
           optimize: true,
           orientation: "portrait",
           margins: 24.5,
           print: false,
           slides: true,
         },
+        template: "catalyst", // Add missing template field
         theme: {
           background: "#1e293b",
           primary: "#22c55e",
