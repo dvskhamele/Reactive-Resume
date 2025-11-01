@@ -1,24 +1,23 @@
 #!/bin/bash
-# Permanent deployment script for Reactive-Resume
+# Permanent deployment script for Reactive-Resume that works with monorepo setup
+# This script handles all the deployment process automatically
 
-echo "🚀 Starting deployment process..."
+echo "🚀 Starting Reactive-Resume deployment process..."
 
 # Navigate to project root
 cd /Users/test/startups/Reactive-Resume
 
-# Temporary rename workspace files to avoid monorepo detection
-echo "🔄 Renaming workspace files..."
-mv nx.json nx.json.tmp 2>/dev/null || true
-mv pnpm-workspace.yaml pnpm-workspace.yaml.tmp 2>/dev/null || true
+# Build the application with proper environment variables
+echo "🔨 Building the application..."
+VITE_USE_LOCAL_STORAGE=true npx nx build client
 
-# Deploy with Netlify CLI
+# Also build the artboard app
+echo "🎨 Building the artboard app..."
+VITE_USE_LOCAL_STORAGE=true npx nx build artboard
+
+# Deploy to Netlify with explicit filter to avoid monorepo detection
 echo "📦 Deploying to Netlify..."
-netlify deploy --prod --no-build --dir=./dist-for-netlify/apps/client --filter client
-
-# Restore workspace files
-echo "🔄 Restoring workspace files..."
-mv nx.json.tmp nx.json 2>/dev/null || true
-mv pnpm-workspace.yaml.tmp pnpm-workspace.yaml 2>/dev/null || true
+netlify deploy --prod --no-build --dir=./dist/apps/client --filter client
 
 echo "✅ Deployment completed successfully!"
-echo "🌐 Visit: https://candidateprofile.netlify.app"
+echo "🌐 Visit: https://resumebench.netlify.app"
