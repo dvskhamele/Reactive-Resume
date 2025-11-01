@@ -598,11 +598,33 @@ export const localStorageService = {
       throw new Error(t`Resume not found`);
     }
 
-    // Update the resume data
-    const updatedResume = { 
-      ...data.resumes[resumeIndex], 
+    // Update the resume data with proper structure maintenance
+    const currentResume = data.resumes[resumeIndex];
+    
+    // Ensure the updated resume has proper structure
+    const updatedResume: ResumeDto = { 
+      ...currentResume,
       ...updateData,
-      updatedAt: new Date() 
+      name: updateData.name || currentResume.name,
+      title: updateData.title || updateData.name || currentResume.title || currentResume.name || t`Untitled Resume`,
+      locked: updateData.locked !== undefined ? updateData.locked : currentResume.locked,
+      updatedAt: new Date(),
+      data: updateData.data ? {
+        ...currentResume.data,
+        ...updateData.data,
+        basics: updateData.data.basics || currentResume.data.basics,
+        sections: updateData.data.sections || currentResume.data.sections,
+        metadata: updateData.data.metadata ? {
+          ...currentResume.data.metadata,
+          ...updateData.data.metadata,
+          page: updateData.data.metadata.page ? {
+            ...currentResume.data.metadata.page,
+            ...updateData.data.metadata.page,
+            format: updateData.data.metadata.page.format?.toLowerCase() || currentResume.data.metadata.page.format || "a4"
+          } : currentResume.data.metadata.page,
+          template: updateData.data.metadata.template || currentResume.data.metadata.template || "catalyst"
+        } : currentResume.data.metadata
+      } : currentResume.data
     };
 
     data.resumes[resumeIndex] = updatedResume;
@@ -634,13 +656,13 @@ export const localStorageService = {
       userId: data.user?.id || "local-user",
       name: resumeData.name || resumeData.title || t`Imported Resume`,
       title: resumeData.name || resumeData.title || t`Imported Resume`,
-      slug: `${resumeData.name || 'imported'}-${Date.now()}`,
+      slug: `${(resumeData.name || 'imported')}-${Date.now()}`,
       visibility: resumeData.visibility || "private",
-      locked: resumeData.locked || false,
+      locked: resumeData.locked !== undefined ? resumeData.locked : false,
       createdAt: resumeData.createdAt || new Date(),
       updatedAt: new Date(), // Set to current date for import
-      data: resumeData.data || {
-        basics: {
+      data: {
+        basics: resumeData.data?.basics || {
           name: "",
           email: "",
           phone: "",
@@ -651,7 +673,7 @@ export const localStorageService = {
           image: "",
           profiles: [],
         },
-        sections: {
+        sections: resumeData.data?.sections || {
           basics: { id: "basics", name: "Basics", visible: true, columns: 1, separateLinks: true, items: [] },
           work: { id: "work", name: "Work", visible: true, columns: 1, separateLinks: true, items: [] },
           volunteer: { id: "volunteer", name: "Volunteer", visible: true, columns: 1, separateLinks: true, items: [] },
@@ -666,25 +688,29 @@ export const localStorageService = {
           projects: { id: "projects", name: "Projects", visible: true, columns: 1, separateLinks: true, items: [] },
           custom: { id: "custom", name: "Custom", visible: true, columns: 1, separateLinks: true, items: [] },
         },
-        metadata: resumeData.data?.metadata || {
-          layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+        metadata: {
+          layout: resumeData.data?.metadata?.layout || [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
           page: {
-            slideshow: { enabled: false, interval: 5 },
-            numbering: "none",
-            pagination: false,
-            filename: "Resume",
-            format: "a4",
-            optimize: true,
-            orientation: "portrait",
-            margins: 24.5,
-            print: false,
-            slides: true,
+            slideshow: resumeData.data?.metadata?.page?.slideshow || { enabled: false, interval: 5 },
+            numbering: resumeData.data?.metadata?.page?.numbering || "none",
+            pagination: resumeData.data?.metadata?.page?.pagination !== undefined ? resumeData.data?.metadata?.page?.pagination : false,
+            filename: resumeData.data?.metadata?.page?.filename || "Resume",
+            format: resumeData.data?.metadata?.page?.format?.toLowerCase() || "a4",
+            optimize: resumeData.data?.metadata?.page?.optimize !== undefined ? resumeData.data?.metadata?.page?.optimize : true,
+            orientation: resumeData.data?.metadata?.page?.orientation || "portrait",
+            margins: resumeData.data?.metadata?.page?.margins || 24.5,
+            print: resumeData.data?.metadata?.page?.print !== undefined ? resumeData.data?.metadata?.page?.print : false,
+            slides: resumeData.data?.metadata?.page?.slides !== undefined ? resumeData.data?.metadata?.page?.slides : true,
           },
           template: resumeData.data?.metadata?.template || "catalyst",
           theme: {
-            background: "#1e293b",
-            primary: "#22c55e",
-            text: { primary: "#1e293b", secondary: "#64748b", accent: "#22c55e" },
+            background: resumeData.data?.metadata?.theme?.background || "#1e293b",
+            primary: resumeData.data?.metadata?.theme?.primary || "#22c55e",
+            text: {
+              primary: resumeData.data?.metadata?.theme?.text?.primary || "#1e293b",
+              secondary: resumeData.data?.metadata?.theme?.text?.secondary || "#64748b",
+              accent: resumeData.data?.metadata?.theme?.text?.accent || "#22c55e",
+            },
           },
         }
       }
