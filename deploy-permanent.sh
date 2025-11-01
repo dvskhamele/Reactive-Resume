@@ -1,23 +1,27 @@
 #!/bin/bash
 # Permanent deployment script for Reactive-Resume that works with monorepo setup
-# This script handles all the deployment process automatically
+# This script handles all deployment process automatically without manual intervention
 
-echo "🚀 Starting Reactive-Resume deployment process..."
+echo "🚀 Starting Reactive-Resume permanent deployment process..."
 
 # Navigate to project root
 cd /Users/test/startups/Reactive-Resume
 
-# Build the application with proper environment variables
-echo "🔨 Building the application..."
+# Clean previous builds
+echo "🧹 Cleaning previous builds..."
+rm -rf dist-for-netlify
+
+# Build the client application with local storage mode
+echo "🔨 Building client application..."
 VITE_USE_LOCAL_STORAGE=true npx nx build client
 
-# Also build the artboard app
-echo "🎨 Building the artboard app..."
+# Build the artboard application
+echo "🎨 Building artboard application..."
 VITE_USE_LOCAL_STORAGE=true npx nx build artboard
 
-# Deploy to Netlify with explicit filter to avoid monorepo detection
-echo "📦 Deploying to Netlify..."
-netlify deploy --prod --no-build --dir=./dist/apps/client --filter client
+# Deploy to Netlify with explicit site specification to avoid monorepo detection
+echo "📦 Deploying to Netlify (resumebench)..."
+netlify deploy --prod --no-build --dir=./dist/apps/client --site="resumebench"
 
 echo "✅ Deployment completed successfully!"
 echo "🌐 Visit: https://resumebench.netlify.app"
