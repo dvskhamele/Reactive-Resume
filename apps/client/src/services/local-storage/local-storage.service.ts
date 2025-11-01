@@ -622,6 +622,78 @@ export const localStorageService = {
     return deletedResume;
   },
 
+  importResume: (resumeData: any): ResumeDto => {
+    const data = getLocalStorageData();
+    
+    // Ensure the imported resume has proper structure
+    const importedResume: ResumeDto = {
+      id: resumeData.id || createId(),
+      userId: data.user?.id || "local-user",
+      name: resumeData.name || resumeData.title || t`Imported Resume`,
+      title: resumeData.name || resumeData.title || t`Imported Resume`,
+      slug: `${resumeData.name || 'imported'}-${Date.now()}`,
+      visibility: resumeData.visibility || "private",
+      locked: resumeData.locked || false,
+      createdAt: resumeData.createdAt || new Date(),
+      updatedAt: new Date(), // Set to current date for import
+      data: resumeData.data || {
+        basics: {
+          name: "",
+          email: "",
+          phone: "",
+          url: { href: "", label: "" },
+          location: "",
+          headline: "",
+          summary: "",
+          image: "",
+          profiles: [],
+        },
+        sections: {
+          basics: { id: "basics", name: "Basics", visible: true, columns: 1, separateLinks: true, items: [] },
+          work: { id: "work", name: "Work", visible: true, columns: 1, separateLinks: true, items: [] },
+          volunteer: { id: "volunteer", name: "Volunteer", visible: true, columns: 1, separateLinks: true, items: [] },
+          education: { id: "education", name: "Education", visible: true, columns: 1, separateLinks: true, items: [] },
+          awards: { id: "awards", name: "Awards", visible: true, columns: 1, separateLinks: true, items: [] },
+          certificates: { id: "certificates", name: "Certificates", visible: true, columns: 1, separateLinks: true, items: [] },
+          publications: { id: "publications", name: "Publications", visible: true, columns: 1, separateLinks: true, items: [] },
+          skills: { id: "skills", name: "Skills", visible: true, columns: 1, separateLinks: true, items: [] },
+          languages: { id: "languages", name: "Languages", visible: true, columns: 1, separateLinks: true, items: [] },
+          interests: { id: "interests", name: "Interests", visible: true, columns: 1, separateLinks: true, items: [] },
+          references: { id: "references", name: "References", visible: true, columns: 1, separateLinks: true, items: [] },
+          projects: { id: "projects", name: "Projects", visible: true, columns: 1, separateLinks: true, items: [] },
+          custom: { id: "custom", name: "Custom", visible: true, columns: 1, separateLinks: true, items: [] },
+        },
+        metadata: resumeData.data?.metadata || {
+          layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+          page: {
+            slideshow: { enabled: false, interval: 5 },
+            numbering: "none",
+            pagination: false,
+            filename: "Resume",
+            format: "a4",
+            optimize: true,
+            orientation: "portrait",
+            margins: 24.5,
+            print: false,
+            slides: true,
+          },
+          template: resumeData.data?.metadata?.template || "catalyst",
+          theme: {
+            background: "#1e293b",
+            primary: "#22c55e",
+            text: { primary: "#1e293b", secondary: "#64748b", accent: "#22c55e" },
+          },
+        }
+      }
+    };
+
+    // Add to resumes list
+    data.resumes.push(importedResume);
+    
+    saveLocalStorageData(data);
+    return importedResume;
+  },
+
   lockResume: (id: string, set: boolean): ResumeDto => {
     const data = getLocalStorageData();
     

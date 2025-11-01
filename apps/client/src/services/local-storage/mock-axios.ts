@@ -75,6 +75,13 @@ export const mockAxiosInstance: AxiosInstance = {
         return createMockResponse<T>(result as unknown as T);
       }
       
+      // Handle resume import
+      if (url === "/resume/import") {
+        // For import, we'll use the data directly as the resume object
+        const result = localStorageService.importResume(data);
+        return createMockResponse<T>(result as unknown as T);
+      }
+      
       // Default response for unhandled endpoints
       return createMockResponse<T>({} as T);
     } catch (error) {
