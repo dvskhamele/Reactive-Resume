@@ -1,16 +1,11 @@
 [build]
   base = "."
   command = "pnpm install && pnpm build:netlify"
-  publish = "dist/apps/client"
+  publish = "dist-for-netlify/apps/client"
   ignore = "git diff --quiet HEAD^ HEAD 2>/dev/null || echo 'Changes detected, proceeding with build'"
 
 [context.production]
   command = "pnpm install && pnpm build:netlify"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
 
 [[redirects]]
   from = "/*"
