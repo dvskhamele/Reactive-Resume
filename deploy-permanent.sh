@@ -13,15 +13,19 @@ rm -rf dist-for-netlify
 
 # Build the client application with local storage mode
 echo "🔨 Building client application..."
-VITE_USE_LOCAL_STORAGE=true npx nx build client
+cd apps/client
+VITE_USE_LOCAL_STORAGE=true npx vite build --emptyOutDir --outDir ../../dist-for-netlify/apps/client
+cd ../..
 
 # Build the artboard application
 echo "🎨 Building artboard application..."
-VITE_USE_LOCAL_STORAGE=true npx nx build artboard
+cd apps/artboard
+VITE_USE_LOCAL_STORAGE=true npx vite build --outDir ../../../dist-for-netlify/apps/client/artboard --emptyOutDir
+cd ../..
 
 # Deploy to Netlify with explicit site specification to avoid monorepo detection
 echo "📦 Deploying to Netlify (resumebench)..."
-netlify deploy --prod --no-build --dir=./dist/apps/client --site="resumebench"
+netlify deploy --prod --no-build --dir=./dist-for-netlify/apps/client --site="533382bf-13bd-4e3b-99aa-ec0dff36320d"
 
 echo "✅ Deployment completed successfully!"
 echo "🌐 Visit: https://resumebench.netlify.app"
