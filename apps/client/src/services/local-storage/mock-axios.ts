@@ -27,15 +27,121 @@ export const mockAxiosInstance: AxiosInstance = {
       
       if (url === "/resume") {
         const resumes = localStorageService.getResumes();
-        return createMockResponse<T>(resumes as unknown as T);
+        // Ensure all resume objects have proper structure
+        const validResumes = resumes.map(resume => ({
+          ...resume,
+          data: resume.data || {
+            basics: {
+              name: "",
+              email: "",
+              phone: "",
+              url: { href: "", label: "" },
+              location: "",
+              headline: "",
+              summary: "",
+              image: "",
+              profiles: [],
+            },
+            sections: {
+              basics: { id: "basics", name: "Basics", visible: true, columns: 1, separateLinks: true, items: [] },
+              work: { id: "work", name: "Work", visible: true, columns: 1, separateLinks: true, items: [] },
+              volunteer: { id: "volunteer", name: "Volunteer", visible: true, columns: 1, separateLinks: true, items: [] },
+              education: { id: "education", name: "Education", visible: true, columns: 1, separateLinks: true, items: [] },
+              awards: { id: "awards", name: "Awards", visible: true, columns: 1, separateLinks: true, items: [] },
+              certificates: { id: "certificates", name: "Certificates", visible: true, columns: 1, separateLinks: true, items: [] },
+              publications: { id: "publications", name: "Publications", visible: true, columns: 1, separateLinks: true, items: [] },
+              skills: { id: "skills", name: "Skills", visible: true, columns: 1, separateLinks: true, items: [] },
+              languages: { id: "languages", name: "Languages", visible: true, columns: 1, separateLinks: true, items: [] },
+              interests: { id: "interests", name: "Interests", visible: true, columns: 1, separateLinks: true, items: [] },
+              references: { id: "references", name: "References", visible: true, columns: 1, separateLinks: true, items: [] },
+              projects: { id: "projects", name: "Projects", visible: true, columns: 1, separateLinks: true, items: [] },
+              custom: { id: "custom", name: "Custom", visible: true, columns: 1, separateLinks: true, items: [] },
+            },
+            metadata: {
+              layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+              page: {
+                slideshow: { enabled: false, interval: 5 },
+                numbering: "none",
+                pagination: false,
+                filename: "Resume",
+                format: "a4",
+                optimize: true,
+                orientation: "portrait",
+                margins: 24.5,
+                print: false,
+                slides: true,
+              },
+              template: "catalyst",
+              theme: {
+                background: "#1e293b",
+                primary: "#22c55e",
+                text: { primary: "#1e293b", secondary: "#64748b", accent: "#22c55e" },
+              },
+            }
+          }
+        }));
+        return createMockResponse<T>(validResumes as unknown as T);
       }
       
       if (url.startsWith("/resume/")) {
         const parts = url.split("/");
         if (parts.length >= 3) {
           const id = parts[2];
-          const resume = localStorageService.getResumeById(id);
+          let resume = localStorageService.getResumeById(id);
           if (resume) {
+            // Ensure the resume has proper structure
+            resume = {
+              ...resume,
+              data: resume.data || {
+                basics: {
+                  name: "",
+                  email: "",
+                  phone: "",
+                  url: { href: "", label: "" },
+                  location: "",
+                  headline: "",
+                  summary: "",
+                  image: "",
+                  profiles: [],
+                },
+                sections: {
+                  basics: { id: "basics", name: "Basics", visible: true, columns: 1, separateLinks: true, items: [] },
+                  work: { id: "work", name: "Work", visible: true, columns: 1, separateLinks: true, items: [] },
+                  volunteer: { id: "volunteer", name: "Volunteer", visible: true, columns: 1, separateLinks: true, items: [] },
+                  education: { id: "education", name: "Education", visible: true, columns: 1, separateLinks: true, items: [] },
+                  awards: { id: "awards", name: "Awards", visible: true, columns: 1, separateLinks: true, items: [] },
+                  certificates: { id: "certificates", name: "Certificates", visible: true, columns: 1, separateLinks: true, items: [] },
+                  publications: { id: "publications", name: "Publications", visible: true, columns: 1, separateLinks: true, items: [] },
+                  skills: { id: "skills", name: "Skills", visible: true, columns: 1, separateLinks: true, items: [] },
+                  languages: { id: "languages", name: "Languages", visible: true, columns: 1, separateLinks: true, items: [] },
+                  interests: { id: "interests", name: "Interests", visible: true, columns: 1, separateLinks: true, items: [] },
+                  references: { id: "references", name: "References", visible: true, columns: 1, separateLinks: true, items: [] },
+                  projects: { id: "projects", name: "Projects", visible: true, columns: 1, separateLinks: true, items: [] },
+                  custom: { id: "custom", name: "Custom", visible: true, columns: 1, separateLinks: true, items: [] },
+                },
+                metadata: {
+                  layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+                  page: {
+                    slideshow: { enabled: false, interval: 5 },
+                    numbering: "none",
+                    pagination: false,
+                    filename: "Resume",
+                    format: "a4",
+                    optimize: true,
+                    orientation: "portrait",
+                    margins: 24.5,
+                    print: false,
+                    slides: true,
+                  },
+                  template: "catalyst",
+                  theme: {
+                    background: "#1e293b",
+                    primary: "#22c55e",
+                    text: { primary: "#1e293b", secondary: "#64748b", accent: "#22c55e" },
+                  },
+                }
+              }
+            };
             return createMockResponse<T>(resume as unknown as T);
           } else {
             return Promise.reject({ response: { status: 404, data: { message: "Resume not found" } } });

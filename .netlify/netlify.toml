@@ -1,0 +1,41 @@
+redirectsOrigin = "config"
+plugins = []
+headers = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "/Users/test/startups/Reactive-Resume/dist/apps/client"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "pnpm install && pnpm build:netlify"
+base = "/Users/test/startups/Reactive-Resume"
+ignore = "git diff --quiet HEAD^ HEAD 2>/dev/null || echo 'Changes detected, proceeding with build'"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

@@ -44,8 +44,10 @@ const initializeLocalStorage = (): LocalStorageData => {
     id: createId(),
     userId: defaultUser.id,
     name: "My Professional Resume",
+    title: "My Professional Resume", // Add missing 'title' field
     slug: "my-professional-resume",
     visibility: "public",
+    locked: false, // Add missing 'locked' field
     createdAt: new Date(),
     updatedAt: new Date(),
     data: {
@@ -309,13 +311,14 @@ const initializeLocalStorage = (): LocalStorageData => {
           numbering: "none",
           pagination: false,
           filename: "John_Doe_Resume",
-          format: "A4",
+          format: "a4", // Fixed case-sensitive value
           optimize: true,
           orientation: "portrait",
           margins: 24.5,
           print: false,
           slides: true,
         },
+        template: "catalyst", // Add required template property
         theme: {
           background: "#1e293b",
           primary: "#22c55e",
@@ -422,8 +425,10 @@ export const localStorageService = {
       id: createId(),
       userId: data.user?.id || "local-user",
       name: name || t`Untitled Resume`,
+      title: name || t`Untitled Resume`, // Add the missing 'title' field
       slug: `${name || 'untitled'}-${Date.now()}`,
       visibility: "private",
+      locked: false, // Add the missing 'locked' field
       createdAt: new Date(),
       updatedAt: new Date(),
       data: {
@@ -554,13 +559,14 @@ export const localStorageService = {
             numbering: "none",
             pagination: false,
             filename: "Resume",
-            format: "A4",
+            format: "a4", // Fixed case-sensitive value
             optimize: true,
             orientation: "portrait",
             margins: 24.5,
             print: false,
             slides: true,
           },
+          template: "catalyst", // Add required template property
           theme: {
             background: "#1e293b",
             primary: "#22c55e",
@@ -596,11 +602,51 @@ export const localStorageService = {
     }
 
     // Update the resume data
+    const currentResume = data.resumes[resumeIndex];
+    
+    // Ensure the updated resume has the required structure
     const updatedResume = { 
-      ...data.resumes[resumeIndex], 
+      ...currentResume, 
       ...updateData,
+      title: updateData.name || currentResume.name || currentResume.title || t`Untitled Resume`, // Ensure title is updated
+      locked: updateData.locked !== undefined ? updateData.locked : currentResume.locked || false, // Ensure locked is properly set
       updatedAt: new Date() 
     };
+
+    // Ensure the updated resume has proper metadata
+    if (!updatedResume.data || !updatedResume.data.metadata) {
+      updatedResume.data = {
+        ...updatedResume.data,
+        metadata: {
+          layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+          page: {
+            slideshow: {
+              enabled: false,
+              interval: 5,
+            },
+            numbering: "none",
+            pagination: false,
+            filename: "Resume",
+            format: "a4",
+            optimize: true,
+            orientation: "portrait",
+            margins: 24.5,
+            print: false,
+            slides: true,
+          },
+          template: "catalyst",
+          theme: {
+            background: "#1e293b",
+            primary: "#22c55e",
+            text: {
+              primary: "#1e293b",
+              secondary: "#64748b",
+              accent: "#22c55e",
+            },
+          },
+        }
+      };
+    }
 
     data.resumes[resumeIndex] = updatedResume;
     saveLocalStorageData(data);
