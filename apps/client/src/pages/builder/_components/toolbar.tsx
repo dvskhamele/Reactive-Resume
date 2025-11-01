@@ -40,7 +40,7 @@ export const BuilderToolbar = () => {
 
   const id = useResumeStore((state) => state.resume.id);
   const isPublic = useResumeStore((state) => state.resume.visibility === "public");
-  const pageOptions = useResumeStore((state) => state.resume.data.metadata.page.options);
+  const pageOptions = useResumeStore((state) => state.resume.data.metadata.page?.options) || {};
 
   const { printResume, loading } = usePrintResume();
 
@@ -138,7 +138,7 @@ export const BuilderToolbar = () => {
         <Tooltip content={t`Toggle Page Break Line`}>
           <Toggle
             className="rounded-none"
-            pressed={pageOptions.breakLine}
+            pressed={!!pageOptions?.breakLine}
             onPressedChange={(pressed) => {
               setValue("metadata.page.options.breakLine", pressed);
             }}
@@ -150,7 +150,7 @@ export const BuilderToolbar = () => {
         <Tooltip content={t`Toggle Page Numbers`}>
           <Toggle
             className="rounded-none"
-            pressed={pageOptions.pageNumbers}
+            pressed={!!pageOptions?.pageNumbers}
             onPressedChange={(pressed) => {
               setValue("metadata.page.options.pageNumbers", pressed);
             }}

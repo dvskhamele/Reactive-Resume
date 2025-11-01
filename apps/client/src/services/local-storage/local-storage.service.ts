@@ -311,14 +311,18 @@ const initializeLocalStorage = (): LocalStorageData => {
           numbering: "none",
           pagination: false,
           filename: "John_Doe_Resume",
-          format: "a4", // Fixed case-sensitive value
+          format: "a4",
           optimize: true,
           orientation: "portrait",
           margins: 24.5,
           print: false,
           slides: true,
+          options: {
+            breakLine: true,
+            pageNumbers: true,
+          },
         },
-        template: "catalyst", // Add missing template field
+        template: "catalyst",
         theme: {
           background: "#1e293b",
           primary: "#22c55e",
@@ -488,6 +492,10 @@ const validateAndFixResume = (resume: any): ResumeDto => {
           margins: resume.data?.metadata?.page?.margins || 24.5,
           print: resume.data?.metadata?.page?.print !== undefined ? resume.data.metadata.page.print : false,
           slides: resume.data?.metadata?.page?.slides !== undefined ? resume.data.metadata.page.slides : true,
+          options: resume.data?.metadata?.page?.options || {
+            breakLine: true,
+            pageNumbers: true,
+          },
         },
         template: resume.data?.metadata?.template || "catalyst",
         theme: {
