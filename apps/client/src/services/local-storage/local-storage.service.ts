@@ -341,6 +341,183 @@ const initializeLocalStorage = (): LocalStorageData => {
   return initialData;
 };
 
+// Validate and fix resume structure
+const validateAndFixResume = (resume: any): ResumeDto => {
+  // Ensure all required top-level fields exist
+  const fixedResume: ResumeDto = {
+    id: resume.id || createId(),
+    userId: resume.userId || "local-user",
+    name: resume.name || resume.title || t`Untitled Resume`,
+    title: resume.title || resume.name || t`Untitled Resume`,
+    slug: resume.slug || `${resume.name || 'untitled'}-${Date.now()}`,
+    visibility: resume.visibility || "private",
+    locked: resume.locked !== undefined ? resume.locked : false,
+    createdAt: resume.createdAt || new Date(),
+    updatedAt: new Date(),
+    data: {
+      basics: {
+        name: resume.data?.basics?.name || "",
+        email: resume.data?.basics?.email || "",
+        phone: resume.data?.basics?.phone || "",
+        url: resume.data?.basics?.url || { href: "", label: "" },
+        location: resume.data?.basics?.location || "",
+        headline: resume.data?.basics?.headline || "",
+        summary: resume.data?.basics?.summary || "",
+        image: resume.data?.basics?.image || "",
+        profiles: Array.isArray(resume.data?.basics?.profiles) ? resume.data.basics.profiles : [],
+      },
+      sections: {
+        basics: resume.data?.sections?.basics || {
+          id: "basics",
+          name: t`Basics`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        work: resume.data?.sections?.work || {
+          id: "work",
+          name: t`Work`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        volunteer: resume.data?.sections?.volunteer || {
+          id: "volunteer",
+          name: t`Volunteer`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        education: resume.data?.sections?.education || {
+          id: "education",
+          name: t`Education`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        awards: resume.data?.sections?.awards || {
+          id: "awards",
+          name: t`Awards`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        certificates: resume.data?.sections?.certificates || {
+          id: "certificates",
+          name: t`Certificates`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        publications: resume.data?.sections?.publications || {
+          id: "publications",
+          name: t`Publications`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        skills: resume.data?.sections?.skills || {
+          id: "skills",
+          name: t`Skills`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        languages: resume.data?.sections?.languages || {
+          id: "languages",
+          name: t`Languages`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        interests: resume.data?.sections?.interests || {
+          id: "interests",
+          name: t`Interests`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        references: resume.data?.sections?.references || {
+          id: "references",
+          name: t`References`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        projects: resume.data?.sections?.projects || {
+          id: "projects",
+          name: t`Projects`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+        custom: resume.data?.sections?.custom || {
+          id: "custom",
+          name: t`Custom`,
+          visible: true,
+          columns: 1,
+          separateLinks: true,
+          items: [],
+        },
+      },
+      metadata: {
+        layout: resume.data?.metadata?.layout || [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
+        page: {
+          slideshow: resume.data?.metadata?.page?.slideshow || {
+            enabled: false,
+            interval: 5,
+          },
+          numbering: resume.data?.metadata?.page?.numbering || "none",
+          pagination: resume.data?.metadata?.page?.pagination !== undefined ? resume.data.metadata.page.pagination : false,
+          filename: resume.data?.metadata?.page?.filename || "Resume",
+          format: (resume.data?.metadata?.page?.format || "a4").toLowerCase(),
+          optimize: resume.data?.metadata?.page?.optimize !== undefined ? resume.data.metadata.page.optimize : true,
+          orientation: resume.data?.metadata?.page?.orientation || "portrait",
+          margins: resume.data?.metadata?.page?.margins || 24.5,
+          print: resume.data?.metadata?.page?.print !== undefined ? resume.data.metadata.page.print : false,
+          slides: resume.data?.metadata?.page?.slides !== undefined ? resume.data.metadata.page.slides : true,
+        },
+        template: resume.data?.metadata?.template || "catalyst",
+        theme: {
+          background: resume.data?.metadata?.theme?.background || "#1e293b",
+          primary: resume.data?.metadata?.theme?.primary || "#22c55e",
+          text: {
+            primary: resume.data?.metadata?.theme?.text?.primary || "#1e293b",
+            secondary: resume.data?.metadata?.theme?.text?.secondary || "#64748b",
+            accent: resume.data?.metadata?.theme?.text?.accent || "#22c55e",
+          },
+        },
+      },
+    },
+  };
+
+  // Fix section items to ensure they have proper structure
+  Object.keys(fixedResume.data.sections).forEach(sectionKey => {
+    const section = fixedResume.data.sections[sectionKey as keyof typeof fixedResume.data.sections];
+    if (section && Array.isArray(section.items)) {
+      section.items = section.items.map(item => ({
+        ...item,
+        id: item.id || createId(),
+        visible: item.visible !== undefined ? item.visible : true,
+      }));
+    }
+  });
+
+  return fixedResume;
+};
+
 // Load data from localStorage
 const getLocalStorageData = (): LocalStorageData => {
   const existingData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -350,6 +527,9 @@ const getLocalStorageData = (): LocalStorageData => {
       // Ensure required arrays exist
       if (!parsed.resumes || !Array.isArray(parsed.resumes)) {
         parsed.resumes = [];
+      } else {
+        // Validate and fix all resume structures
+        parsed.resumes = parsed.resumes.map(validateAndFixResume);
       }
       return parsed;
     } catch {
