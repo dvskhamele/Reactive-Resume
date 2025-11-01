@@ -863,27 +863,35 @@ export const localStorageService = {
         metadata: {
           layout: resumeData.data?.metadata?.layout || [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
           page: {
-            slideshow: resumeData.data?.metadata?.page?.slideshow || { enabled: false, interval: 5 },
-            numbering: resumeData.data?.metadata?.page?.numbering || "none",
-            pagination: resumeData.data?.metadata?.page?.pagination !== undefined ? resumeData.data?.metadata?.page?.pagination : false,
-            filename: resumeData.data?.metadata?.page?.filename || "Resume",
-            format: resumeData.data?.metadata?.page?.format?.toLowerCase() || "a4",
-            optimize: resumeData.data?.metadata?.page?.optimize !== undefined ? resumeData.data?.metadata?.page?.optimize : true,
-            orientation: resumeData.data?.metadata?.page?.orientation || "portrait",
-            margins: resumeData.data?.metadata?.page?.margins || 24.5,
-            print: resumeData.data?.metadata?.page?.print !== undefined ? resumeData.data?.metadata?.page?.print : false,
-            slides: resumeData.data?.metadata?.page?.slides !== undefined ? resumeData.data?.metadata?.page?.slides : true,
+            margin: resumeData.data?.metadata?.page?.margin || 24.5,
+            format: (resumeData.data?.metadata?.page?.format || "a4").toLowerCase(),
+            options: {
+              breakLine: resumeData.data?.metadata?.page?.options?.breakLine !== undefined ? resumeData.data?.metadata?.page?.options?.breakLine : false,
+              pageNumbers: resumeData.data?.metadata?.page?.options?.pageNumbers !== undefined ? resumeData.data?.metadata?.page?.options?.pageNumbers : false,
+            },
           },
           template: resumeData.data?.metadata?.template || "catalyst",
           theme: {
             background: resumeData.data?.metadata?.theme?.background || "#1e293b",
+            text: resumeData.data?.metadata?.theme?.text || "#1e293b",
             primary: resumeData.data?.metadata?.theme?.primary || "#22c55e",
-            text: {
-              primary: resumeData.data?.metadata?.theme?.text?.primary || "#1e293b",
-              secondary: resumeData.data?.metadata?.theme?.text?.secondary || "#64748b",
-              accent: resumeData.data?.metadata?.theme?.text?.accent || "#22c55e",
-            },
           },
+          css: resumeData.data?.metadata?.css || {
+            value: "* {\n\toutline: 1px solid #000;\n\toutline-offset: 4px;\n}",
+            visible: false,
+          },
+          typography: {
+            font: resumeData.data?.metadata?.typography?.font || {
+              family: "IBM Plex Sans",
+              subset: "latin",
+              variants: ["regular"],
+              size: 14,
+            },
+            lineHeight: resumeData.data?.metadata?.typography?.lineHeight || 1.5,
+            hideIcons: resumeData.data?.metadata?.typography?.hideIcons !== undefined ? resumeData.data?.metadata?.typography?.hideIcons : false,
+            underlineLinks: resumeData.data?.metadata?.typography?.underlineLinks !== undefined ? resumeData.data?.metadata?.typography?.underlineLinks : true,
+          },
+          notes: resumeData.data?.metadata?.notes || "",
         }
       }
     };
