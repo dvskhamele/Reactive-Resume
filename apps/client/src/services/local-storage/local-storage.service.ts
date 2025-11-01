@@ -422,8 +422,10 @@ export const localStorageService = {
       id: createId(),
       userId: data.user?.id || "local-user",
       name: name || t`Untitled Resume`,
+      title: name || t`Untitled Resume`, // Add missing title field
       slug: `${name || 'untitled'}-${Date.now()}`,
       visibility: "private",
+      locked: false, // Add missing locked field
       createdAt: new Date(),
       updatedAt: new Date(),
       data: {
@@ -554,13 +556,14 @@ export const localStorageService = {
             numbering: "none",
             pagination: false,
             filename: "Resume",
-            format: "A4",
+            format: "a4", // Fixed case-sensitive value
             optimize: true,
             orientation: "portrait",
             margins: 24.5,
             print: false,
             slides: true,
           },
+          template: "catalyst", // Add missing template field
           theme: {
             background: "#1e293b",
             primary: "#22c55e",
