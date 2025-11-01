@@ -29,6 +29,13 @@ export const LocaleProvider = ({ children }: Props) => {
     }
   }, [userLocale]);
 
+  // Ensure default locale is activated immediately if not already
+  useEffect(() => {
+    if (!i18n.locale) {
+      void dynamicActivate(defaultLocale);
+    }
+  }, []);
+
   return <I18nProvider i18n={i18n}>{children}</I18nProvider>;
 };
 
