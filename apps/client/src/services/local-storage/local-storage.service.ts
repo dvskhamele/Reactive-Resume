@@ -740,30 +740,35 @@ export const localStorageService = {
         metadata: {
           layout: [[["basics"], ["work"], ["education"], ["projects"], ["skills"], ["languages"], ["interests"]], [["awards"], ["certificates"], ["publications"], ["volunteer"], ["references"]]],
           page: {
-            slideshow: {
-              enabled: false,
-              interval: 5,
+            margin: 24.5,
+            format: "a4",
+            options: {
+              breakLine: false,
+              pageNumbers: false,
             },
-            numbering: "none",
-            pagination: false,
-            filename: "Resume",
-            format: "a4", // Fixed case-sensitive value
-            optimize: true,
-            orientation: "portrait",
-            margins: 24.5,
-            print: false,
-            slides: true,
           },
-          template: "catalyst", // Add missing template field
+          template: "catalyst",
           theme: {
             background: "#1e293b",
+            text: "#1e293b",
             primary: "#22c55e",
-            text: {
-              primary: "#1e293b",
-              secondary: "#64748b",
-              accent: "#22c55e",
-            },
           },
+          css: {
+            value: "* {\n\toutline: 1px solid #000;\n\toutline-offset: 4px;\n}",
+            visible: false,
+          },
+          typography: {
+            font: {
+              family: "IBM Plex Sans",
+              subset: "latin",
+              variants: ["regular"],
+              size: 14,
+            },
+            lineHeight: 1.5,
+            hideIcons: false,
+            underlineLinks: true,
+          },
+          notes: "",
         },
       },
     };
