@@ -1,13 +1,24 @@
 [build]
   base = "."
-  command = "pnpm install && pnpm build:netlify"
-  publish = "dist-for-netlify/apps/client"
+  command = "VITE_USE_LOCAL_STORAGE=true npx nx build client"
+  publish = "dist/apps/client"
   ignore = "git diff --quiet HEAD^ HEAD 2>/dev/null || echo 'Changes detected, proceeding with build'"
 
 [context.production]
-  command = "pnpm install && pnpm build:netlify"
+  command = "VITE_USE_LOCAL_STORAGE=true npx nx build client"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[dev]
+  command = "VITE_USE_LOCAL_STORAGE=true npx nx serve client"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
