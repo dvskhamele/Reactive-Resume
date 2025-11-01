@@ -781,38 +781,19 @@ export const localStorageService = {
       throw new Error(t`Resume not found`);
     }
 
-    // Update the resume data with proper structure maintenance
-    const currentResume = data.resumes[resumeIndex];
-    
-    // Ensure the updated resume has proper structure
-    const updatedResume: ResumeDto = { 
-      ...currentResume,
+    // Merge and validate the updated resume data
+    const mergedResumeData = { 
+      ...data.resumes[resumeIndex], 
       ...updateData,
-      name: updateData.name || currentResume.name,
-      title: updateData.title || updateData.name || currentResume.title || currentResume.name || t`Untitled Resume`,
-      locked: updateData.locked !== undefined ? updateData.locked : currentResume.locked,
-      updatedAt: new Date(),
-      data: updateData.data ? {
-        ...currentResume.data,
-        ...updateData.data,
-        basics: updateData.data.basics || currentResume.data.basics,
-        sections: updateData.data.sections || currentResume.data.sections,
-        metadata: updateData.data.metadata ? {
-          ...currentResume.data.metadata,
-          ...updateData.data.metadata,
-          page: updateData.data.metadata.page ? {
-            ...currentResume.data.metadata.page,
-            ...updateData.data.metadata.page,
-            format: updateData.data.metadata.page.format?.toLowerCase() || currentResume.data.metadata.page.format || "a4"
-          } : currentResume.data.metadata.page,
-          template: updateData.data.metadata.template || currentResume.data.metadata.template || "catalyst"
-        } : currentResume.data.metadata
-      } : currentResume.data
+      updatedAt: new Date()
     };
 
-    data.resumes[resumeIndex] = updatedResume;
+    // Use validation to ensure proper structure
+    const validatedResume = validateAndFixResume(mergedResumeData);
+
+    data.resumes[resumeIndex] = validatedResume;
     saveLocalStorageData(data);
-    return updatedResume;
+    return validatedResume;
   },
 
   deleteResume: (id: string): ResumeDto => {
