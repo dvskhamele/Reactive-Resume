@@ -23,9 +23,9 @@ cd apps/artboard
 VITE_USE_LOCAL_STORAGE=true npx vite build --outDir ../../../dist-for-netlify/apps/client/artboard --emptyOutDir
 cd ../..
 
-# Deploy to Netlify with explicit site specification to avoid monorepo detection
+# Deploy to Netlify with explicit filter to avoid monorepo detection issues
 echo "📦 Deploying to Netlify..."
-netlify deploy --prod --no-build --dir=./dist-for-netlify/apps/client --site="533382bf-13bd-4e3b-99aa-ec0dff36320d"
+netlify deploy --prod --no-build --dir=./dist-for-netlify/apps/client --filter client
 
 echo "✅ Deployment completed successfully!"
-echo "🌐 Visit: https://resumebench.netlify.app"
+echo "🌐 Visit: https://zenith-sma.netlify.app"
