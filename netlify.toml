@@ -1,11 +1,12 @@
 [build]
   base = "."
-  command = "VITE_USE_LOCAL_STORAGE=true npx nx build client"
+  command = "VITE_USE_LOCAL_STORAGE=true pnpm build:client"
   publish = "dist/apps/client"
   ignore = "git diff --quiet HEAD^ HEAD 2>/dev/null || echo 'Changes detected, proceeding with build'"
+  environment = { NODE_VERSION = "22.13.1" }
 
 [context.production]
-  command = "VITE_USE_LOCAL_STORAGE=true npx nx build client"
+  command = "VITE_USE_LOCAL_STORAGE=true pnpm build:client"
 
 [[redirects]]
   from = "/*"

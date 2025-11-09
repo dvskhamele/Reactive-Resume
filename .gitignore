@@ -51,11 +51,18 @@ stats.html
 # Lingui Compiled Messages
 apps/client/src/locales/_build/
 apps/client/src/locales/*/messages.*js
+<<<<<<< HEAD
+=======
+.vercel
+>>>>>>> bk_Reactive-Resume_20251029_194242_MOD____6-UNT____2_MOD_
 node_modules/
 .next/
 dist/
 *.log
 tmp/
+<<<<<<< HEAD
 
 # Local Netlify folder
 .netlify
+=======
+>>>>>>> bk_Reactive-Resume_20251029_194242_MOD____6-UNT____2_MOD_

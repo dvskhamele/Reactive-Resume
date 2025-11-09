@@ -15,11 +15,13 @@
     "url": "https://github.com/signimus-tech/Signimus-Resume-Creator.git"
   },
   "scripts": {
+    "postinstall": "./scripts/postinstall.sh",
     "dev": "nx run-many -t serve",
     "test": "pnpm vitest run",
     "prebuild": "pnpm prisma:generate",
     "build": "nx run-many -t build",
-    "build:client": "cd apps/client && npx vite build --emptyOutDir",
+"postbuild": "cd apps/client && mkdir -p dist/assets/logos && cp public/support-logos/* dist/assets/logos/",
+    "build:client": "cd apps/client && npx vite build --emptyOutDir && mkdir -p dist/assets/logos && cp public/support-logos/* dist/assets/logos/",
     "build:client:skip": "cd apps/client && tsc --noEmit && npx vite build --emptyOutDir",
     "build:netlify": "VITE_USE_LOCAL_STORAGE=true npx nx build utils && npx nx build schema && npx nx build dto && npx nx build parser && npx nx build ui && npx nx build hooks && npx nx build client",
     "prestart": "pnpm prisma:migrate",

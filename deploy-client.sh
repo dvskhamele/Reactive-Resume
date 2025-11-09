@@ -7,8 +7,12 @@ echo "Building the client app..."
 # Set environment variable to use local storage instead of API calls
 export VITE_USE_LOCAL_STORAGE="true"
 
+<<<<<<< HEAD
 # Build the client app from the project root
 cd /Users/test/startups/Reactive-Resume
+=======
+# Build the client app from the root directory
+>>>>>>> bk_Reactive-Resume_20251029_194242_MOD____6-UNT____2_MOD_
 pnpm build:client
 
 # Check if build was successful
