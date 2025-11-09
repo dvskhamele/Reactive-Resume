@@ -14,10 +14,17 @@ const authRoutes = [{ path: "/auth/login" }, { path: "/auth/register" }];
 
 export const AuthLayout = () => {
   const location = useLocation();
-  const { providers } = useAuthProviders();
+  const { providers, loading } = useAuthProviders();
   const isAuthRoute = useMemo(() => matchRoutes(authRoutes, location) !== null, [location]);
 
-  if (!providers) return null;
+  // Show loading state instead of completely bailing out
+  if (loading || !providers) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <div className="text-foreground/80 text-sm">{t`Loading authentication providers...`}</div>
+      </div>
+    );
+  }
 
   const hasEmailProvider = Array.isArray(providers) ? providers.includes("email") : false;
   const hideDivider = !Array.isArray(providers) || !hasEmailProvider || providers.length === 1;
