@@ -2,32 +2,15 @@
   "version": 2,
   "builds": [
     {
-<<<<<<< HEAD
       "src": "apps/client/dist/**",
       "use": "@vercel/static"
-=======
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "apps/client/dist"
-      }
->>>>>>> bk_Reactive-Resume_20251029_194242_MOD____6-UNT____2_MOD_
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-<<<<<<< HEAD
       "dest": "/index.html",
       "status": 200
-=======
-      "dest": "/index.html"
->>>>>>> bk_Reactive-Resume_20251029_194242_MOD____6-UNT____2_MOD_
     }
-  ],
-  "build": {
-    "env": {
-      "VITE_USE_LOCAL_STORAGE": "true"
-    }
-  }
+  ]
 }
